@@ -1,4 +1,21 @@
 Get http://localhost:3000/users
 ### 
 
-Get http://localhost:3000/users/test
+Post http://localhost:3000/users/test 
+Content-Type: application/json
+
+
+### payment request
+Post http://localhost:3000/users/payment 
+Content-Type: application/json
+
+{"tokenId": "pk_test_51Q0OsODmVJRVlYWkkRMV6XZ4NcD9VOVBEdsCb0ypBuBtQN4NL7bDDZFJETo7JwD7XA2uYNbTVqkk3A3Z115I1zaY00RVrJ1opv", "amount": 2000}
+
+
+### payment intent
+
+Post http://localhost:3000/users/intent 
+Content-Type: application/json
+
+{"currency": "usd", "amount": 2000}
+

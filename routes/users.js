@@ -10,10 +10,12 @@ router.get('/', function(req, res, next) {
 });
 
 // GET all comments.
-router.get("/test/", stripe_controller.get_test);
+router.post("/test/", stripe_controller.get_test);
 
 // receive payment
 
 router.post("/payment/", stripe_controller.post_payment);
+
+router.post("/intent/", stripe_controller.post_intent);
 
 module.exports = router;
