@@ -20,4 +20,4 @@ const ProductSchema = new Schema({
 
 
 // Export model
-module.exports = mongoose.model("Posts", PostsSchema);
+module.exports = mongoose.model("Product", ProductSchema);
