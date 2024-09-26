@@ -3,6 +3,7 @@ const router = express.Router();
 //const router = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const stripe_controller = require("../controllers/stripeController");
+const auth_controller = require("../controllers/authController")
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -13,9 +14,13 @@ router.get('/', function(req, res, next) {
 router.post("/test/", stripe_controller.get_test);
 
 // receive payment
-
+//route for old stripe api
 router.post("/payment/", stripe_controller.post_payment);
-
+// route for new stripe api
 router.post("/intent/", stripe_controller.post_intent);
+// route for new user
+router.post("/signup/", auth_controller.sign_up);
+// route for login
+router.post("/login/", auth_controller.log_in);
 
 module.exports = router;

@@ -19,3 +19,16 @@ Content-Type: application/json
 
 {"currency": "usd", "amount": 2000}
 
+### new user
+
+Post http://localhost:3000/users/signup 
+Content-Type: application/json
+
+{"firstName": "Craig", "lastName":"Mar", "userName":"cmar@yahoo.com", "password": "123456", "confirm": "123456"}
+
+### login get token
+
+Post http://localhost:3000/users/login 
+Content-Type: application/json
+
+{ "userName":"cmar@yahoo.com", "password": "123456" }

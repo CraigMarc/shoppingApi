@@ -17,20 +17,20 @@ const app = express();
 /* restrict access later ***********
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://blog-public-two.vercel.app", "https://blog-user-beta.vercel.app"],
+    origin: ["https://blog-public-two.vercel.app", "https://blog-user-beta.vercel.app"],
     credentials: true,
   })
 );*/
 
 
 app.use(cors());
-/*
+
 const mongoDB = process.env.MONGODB_URI 
 
 main().catch((err) => console.log(err));
 async function main() {
 await mongoose.connect(mongoDB);
-}*/
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
