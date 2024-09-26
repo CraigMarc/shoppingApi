@@ -32,3 +32,11 @@ Post http://localhost:3000/users/login
 Content-Type: application/json
 
 { "userName":"cmar@yahoo.com", "password": "123456" }
+
+### new product
+
+Post http://localhost:3000/products/new 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3Mzg3OTUxLCJleHAiOjE3MjczODk5NTF9.HdnvkPt3KvVn-c1wu2mopupOSJZfvtuKPYkeVIBh8TI
+Content-Type: application/json
+
+{"title":"edit test", "text":"edit Lorem ipsum dolor sit " }
