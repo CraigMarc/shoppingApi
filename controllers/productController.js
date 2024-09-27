@@ -3,6 +3,7 @@ const multer = require("multer"); // For uploading images
 const { body, validationResult } = require("express-validator")
 const mongoose = require("mongoose");
 const Product = require("../models/inventory");
+const fs = require('fs');
 
 // set up multer for pic uploads
 
@@ -96,28 +97,28 @@ exports.post_product = [
     .withMessage("quantity must be specified.")
     .isAlphanumeric()
     .withMessage("quantity has non-alphanumeric characters."),
-    body("length")
+  body("length")
     .trim()
     .isLength({ min: 1 })
     .escape()
     .withMessage("length must be specified.")
     .isAlphanumeric()
     .withMessage("length has non-alphanumeric characters."),
-    body("width")
+  body("width")
     .trim()
     .isLength({ min: 1 })
     .escape()
     .withMessage("width must be specified.")
     .isAlphanumeric()
     .withMessage("width has non-alphanumeric characters."),
-    body("height")
+  body("height")
     .trim()
     .isLength({ min: 1 })
     .escape()
     .withMessage("height must be specified.")
     .isAlphanumeric()
     .withMessage("height has non-alphanumeric characters."),
-    body("weight")
+  body("weight")
     .trim()
     .isLength({ min: 1 })
     .escape()
@@ -126,7 +127,7 @@ exports.post_product = [
     .withMessage("weight has non-alphanumeric characters."),
 
   async function (req, res, next) {
-   
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
@@ -192,5 +193,45 @@ exports.post_product = [
 
 ]
 
+// get all products
+
+exports.all_products_get = asyncHandler(async (req, res) => {
 
 
+  try {
+    let allProducts = await Product.find().exec()
+    res.status(200).json(allProducts)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
+
+// delete product
+
+
+exports.delete_product = asyncHandler(async (req, res) => {
+
+  try {
+    //find pic file
+    let picProduct = await Product.findById(req.params.productId);
+
+    //delete pic file
+    if (picProduct.image) {
+      fs.unlink("./uploads/" + picProduct.image, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log("Delete File successful.");
+      });
+    }
+    //delete post
+    await Product.findByIdAndDelete(req.params.productId);
+    let allProducts = await Product.find().exec()
+    res.status(200).json(allProducts)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});

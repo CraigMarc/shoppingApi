@@ -102,3 +102,12 @@ Content-Type: image/jpeg
 < ./me.JPG 
 --MfnBoundry--
 
+### get all products
+
+GET http://localhost:3000/products/all 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY3MjIxLCJleHAiOjE3Mjc0NjkyMjF9.CJVbDEFPpFikN5F30c9bgF6ynN2UsWBlrW9aBPCj10M
+
+### delete product
+
+Delete http://localhost:3000/products/delete/66f70af1d5bff40e80b37cfd
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY3MjIxLCJleHAiOjE3Mjc0NjkyMjF9.CJVbDEFPpFikN5F30c9bgF6ynN2UsWBlrW9aBPCj10M
