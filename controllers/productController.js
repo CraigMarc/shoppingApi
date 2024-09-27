@@ -96,7 +96,34 @@ exports.post_product = [
     .withMessage("quantity must be specified.")
     .isAlphanumeric()
     .withMessage("quantity has non-alphanumeric characters."),
-
+    body("length")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("length must be specified.")
+    .isAlphanumeric()
+    .withMessage("length has non-alphanumeric characters."),
+    body("width")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("width must be specified.")
+    .isAlphanumeric()
+    .withMessage("width has non-alphanumeric characters."),
+    body("height")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("height must be specified.")
+    .isAlphanumeric()
+    .withMessage("height has non-alphanumeric characters."),
+    body("weight")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("weight must be specified.")
+    .isAlphanumeric()
+    .withMessage("weight has non-alphanumeric characters."),
 
   async function (req, res, next) {
    
@@ -118,6 +145,10 @@ exports.post_product = [
         description: req.body.description,
         modelNum: req.body.modelNum,
         price: req.body.price,
+        length: req.body.length,
+        width: req.body.width,
+        height: req.body.height,
+        weight: req.body.weight,
         quantity: req.body.quantity,
         published: false,
         image: req.file.filename
@@ -139,8 +170,12 @@ exports.post_product = [
         description: req.body.description,
         modelNum: req.body.modelNum,
         price: req.body.price,
+        length: req.body.length,
+        width: req.body.width,
+        height: req.body.height,
+        weight: req.body.weight,
         quantity: req.body.quantity,
-        published: false,
+        published: false
 
       });
       try {

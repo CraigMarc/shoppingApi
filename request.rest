@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### multipart form request with webkit
 POST http://localhost:3000/products/new HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDAzNTkzLCJleHAiOjE3Mjc0MDU1OTN9.0Ic5KX8vJ6rsoRC-OOmVVUBPTXQ7BWR1ARmpTlmyVS0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY2MTkyLCJleHAiOjE3Mjc0NjgxOTJ9.vHbaqqKo8Nvmg9-bYUqej1FWJSNTq0-0FLZdCHX2LSQ
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
@@ -79,6 +79,22 @@ title
 Content-Disposition: form-data; name="category"
 
 category
+--MfnBoundry
+Content-Disposition: form-data; name="length"
+
+10
+--MfnBoundry
+Content-Disposition: form-data; name="width"
+
+5
+--MfnBoundry
+Content-Disposition: form-data; name="height"
+
+1
+--MfnBoundry
+Content-Disposition: form-data; name="weight"
+
+2
 --MfnBoundry
 Content-Disposition: form-data; name="image"; filename="./me.JPG" 
 Content-Type: image/jpeg
