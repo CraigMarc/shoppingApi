@@ -36,7 +36,7 @@ Content-Type: application/json
 ### new product
 
 Post http://localhost:3000/products/new 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3Mzg3OTUxLCJleHAiOjE3MjczODk5NTF9.HdnvkPt3KvVn-c1wu2mopupOSJZfvtuKPYkeVIBh8TI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDcxMDQ3LCJleHAiOjE3Mjc0NzMwNDd9.7MM4QQy7nwdfMbj-hXNGVTzzja3ZfRrrbHITFd4CXJk
 Content-Type: application/json
 
 {"title":"edit test", "text":"edit Lorem ipsum dolor sit " }
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### multipart form request with webkit
 POST http://localhost:3000/products/new HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY2MTkyLCJleHAiOjE3Mjc0NjgxOTJ9.vHbaqqKo8Nvmg9-bYUqej1FWJSNTq0-0FLZdCHX2LSQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDcxMDQ3LCJleHAiOjE3Mjc0NzMwNDd9.7MM4QQy7nwdfMbj-hXNGVTzzja3ZfRrrbHITFd4CXJk
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
@@ -111,3 +111,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtY
 
 Delete http://localhost:3000/products/delete/66f70af1d5bff40e80b37cfd
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY3MjIxLCJleHAiOjE3Mjc0NjkyMjF9.CJVbDEFPpFikN5F30c9bgF6ynN2UsWBlrW9aBPCj10M
+
+### publish product
+
+PUT http://localhost:3000/products/publish/66f61663764140d30b4d1a0b
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY3MjIxLCJleHAiOjE3Mjc0NjkyMjF9.CJVbDEFPpFikN5F30c9bgF6ynN2UsWBlrW9aBPCj10M
+Content-Type: application/json
+
+
+### delete pic
+
+Delete http://localhost:3000/products/image/66f71e4c586e6e1d9a3774ef
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDcxMDQ3LCJleHAiOjE3Mjc0NzMwNDd9.7MM4QQy7nwdfMbj-hXNGVTzzja3ZfRrrbHITFd4CXJk
+
+
+### add pic to product
+POST http://localhost:3000/products/image/66f71e4c586e6e1d9a3774ef HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDcxMDQ3LCJleHAiOjE3Mjc0NzMwNDd9.7MM4QQy7nwdfMbj-hXNGVTzzja3ZfRrrbHITFd4CXJk
+Content-Type: multipart/form-data; boundary=MfnBoundry
+
+--MfnBoundry
+Content-Disposition: form-data; name="image"; filename="./me.JPG" 
+Content-Type: image/jpeg
+
+< ./me.JPG 
+--MfnBoundry--
