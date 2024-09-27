@@ -81,9 +81,7 @@ exports.post_product = [
     .withMessage("description has non-alphanumeric characters."),
   body("modelNum")
     .trim()
-    .escape()
-    .isAlphanumeric()
-    .withMessage("catgegory has non-alphanumeric characters."),
+    .escape(),
   body("price")
     .trim()
     .isLength({ min: 1 })
@@ -101,8 +99,7 @@ exports.post_product = [
 
 
   async function (req, res, next) {
-    console.log(req.body)
-    console.log('hello')
+   
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
@@ -118,7 +115,7 @@ exports.post_product = [
         category: req.body.category,
         brand: req.body.brand,
         color: req.body.color,
-        description: req.body.descrption,
+        description: req.body.description,
         modelNum: req.body.modelNum,
         price: req.body.price,
         quantity: req.body.quantity,
@@ -139,7 +136,7 @@ exports.post_product = [
         category: req.body.category,
         brand: req.body.brand,
         color: req.body.color,
-        description: req.body.descrption,
+        description: req.body.description,
         modelNum: req.body.modelNum,
         price: req.body.price,
         quantity: req.body.quantity,
