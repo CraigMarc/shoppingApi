@@ -62,17 +62,14 @@ exports.post_product = [
   body("brand")
     .trim()
     .escape()
-    .withMessage("brand must be specified.")
     .isAlphanumeric()
     .withMessage("brand has non-alphanumeric characters."),
   body("color")
     .trim()
-    .escape()
-    .withMessage("specify color"),
+    .escape(),
   body("brand")
     .trim()
     .escape()
-    .withMessage("brand must be specified.")
     .isAlphanumeric()
     .withMessage("brand has non-alphanumeric characters."),
   body("description")
@@ -104,7 +101,8 @@ exports.post_product = [
 
 
   async function (req, res, next) {
-
+    console.log(req.body)
+    console.log('hello')
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
