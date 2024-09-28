@@ -99,9 +99,9 @@ exports.sign_up = [
 
 exports.log_in = asyncHandler(async (req, res, next) => {
 
-  let { userName, password } = req.body;
+  let { email, password } = req.body;
   try {
-    let userDb = await User.find({ 'userName': userName }).exec()
+    let userDb = await User.find({ 'userName': email }).exec()
 
     const match = await bcrypt.compare(password, userDb[0].password);
 
@@ -110,7 +110,7 @@ exports.log_in = asyncHandler(async (req, res, next) => {
       const opts = {}
       opts.expiresIn = 2000;
       const secret = process.env.SECRET_KEY
-      const token = jwt.sign({ userName }, secret, opts);
+      const token = jwt.sign({ email }, secret, opts);
 
       
     

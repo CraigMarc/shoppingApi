@@ -31,7 +31,7 @@ Content-Type: application/json
 Post http://localhost:3000/users/login 
 Content-Type: application/json
 
-{ "userName":"cmar@yahoo.com", "password": "123456" }
+{ "email":"cmar@yahoo.com", "password": "123456" }
 
 ### new product
 
