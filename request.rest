@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### multipart form request with webkit
 POST http://localhost:3000/products/new HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDcxMDQ3LCJleHAiOjE3Mjc0NzMwNDd9.7MM4QQy7nwdfMbj-hXNGVTzzja3ZfRrrbHITFd4CXJk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NTM4NzM3LCJleHAiOjE3Mjc1NDA3Mzd9.Yl919elSS7esKRgPfg0deKaaTU9TC5gfNMVIk64BUNU
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
@@ -105,7 +105,8 @@ Content-Type: image/jpeg
 ### get all products
 
 GET http://localhost:3000/products/all 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDY3MjIxLCJleHAiOjE3Mjc0NjkyMjF9.CJVbDEFPpFikN5F30c9bgF6ynN2UsWBlrW9aBPCj10M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NTM4NzM3LCJleHAiOjE3Mjc1NDA3Mzd9.Yl919elSS7esKRgPfg0deKaaTU9TC5gfNMVIk64BUNU
+ 
 
 ### delete product
 
@@ -136,3 +137,38 @@ Content-Type: image/jpeg
 
 < ./me.JPG 
 --MfnBoundry--
+
+### edit post
+
+PUT http://localhost:3000/products/edit/66f82948b219f89bc7421dcc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NTQwODgyLCJleHAiOjE3Mjc1NDI4ODJ9.BXGVTlie1YZJI0g6KpErNAK4ZC7d2oS5282ehKOomqs
+Content-Type: application/json
+
+{
+      "title": "productData.title",
+      "category": "productData.category",
+      "brand": "productData.brand",
+      "color": "productData.color",
+      "description": "productData.description",
+      "modelNum": "productData.modelNum",
+      "price": "productData.price",
+      "length": "productData.length",
+      "width": "productData.width",
+      "height": "productData.height",
+      "weight": "productData.weight",
+      "quantity": "productData.quantity"
+      
+    
+
+    }
+
+### edit post
+
+PUT http://localhost:3000/products/edit/66f82948b219f89bc7421dcc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NTM4NzM3LCJleHAiOjE3Mjc1NDA3Mzd9.Yl919elSS7esKRgPfg0deKaaTU9TC5gfNMVIk64BUNU
+Content-Type: application/json
+
+{
+     
+
+    }

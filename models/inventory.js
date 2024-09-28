@@ -15,7 +15,6 @@ const ProductSchema = new Schema({
   width: { type: Number, required: true, minLength: 1 },
   height: { type: Number, required: true, minLength: 1 },
   weight: { type: Number, required: true, minLength: 1 },
-  timestamp: { type: Date, default: new Date() },
   published: { type: Boolean },
   image: { type: String }, 
 });

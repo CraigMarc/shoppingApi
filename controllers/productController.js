@@ -312,24 +312,26 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
 exports.edit_product = asyncHandler(async (req, res) => {
 
+  console.log(req.body)
+ console.log(req.params.productId)
 
   const product = new Product({
 
     title: req.body.title,
-    category: req.body.category,
-    brand: req.body.brand,
-    color: req.body.color,
-    description: req.body.description,
-    modelNum: req.body.modelNum,
-    price: req.body.price,
-    length: req.body.length,
-    width: req.body.width,
-    height: req.body.height,
-    weight: req.body.weight,
-    quantity: req.body.quantity,
-    published: false,
-    _id: req.params.postId,
-    //image: req.params.image
+      category: req.body.category,
+      brand: req.body.brand,
+      color: req.body.color,
+      description: req.body.description,
+      modelNum: req.body.modelNum,
+      price: req.body.price,
+      length: req.body.length,
+      width: req.body.width,
+      height: req.body.height,
+      weight: req.body.weight,
+      quantity: req.body.quantity,
+      published: req.body.published,
+      _id: req.params.productId
+    
   });
 
   try {
