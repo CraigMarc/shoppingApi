@@ -4,6 +4,8 @@ const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const stripe_controller = require("../controllers/stripeController");
 const auth_controller = require("../controllers/authController")
+const usps_controller = require("../controllers/uspsController")
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -27,4 +29,4 @@ module.exports = router;
 
 // usps get token
 
-router.post("/usps/", auth_controller.post_usps);
+router.post("/usps/", usps_controller.post_usps);

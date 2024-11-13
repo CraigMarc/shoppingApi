@@ -14,6 +14,7 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const productRouter = require('./routes/products')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
 const User = require("./models/user");
 
 const app = express();

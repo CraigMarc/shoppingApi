@@ -173,9 +173,23 @@ Content-Type: application/json
 
     }
 
-### usps get token
+### usps get shipping price
 
 Post http://localhost:3000/users/usps
 Content-Type: application/json
 
+{
+      "originZIPCode": "22407",
+        "destinationZIPCode": "63118",
+        "weight": 5,
+        "length": 3,
+        "width": 2,
+        "height": 1,
+        "mailClass": "USPS_GROUND_ADVANTAGE",
+        "processingCategory": "NON_MACHINABLE",
+        "rateIndicator": "SP",
+        "destinationEntryFacilityType": "NONE",
+        "priceType": "COMMERCIAL"
+    
 
+    }
