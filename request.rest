@@ -172,3 +172,10 @@ Content-Type: application/json
      
 
     }
+
+### usps get token
+
+Post http://localhost:3000/users/usps
+Content-Type: application/json
+
+

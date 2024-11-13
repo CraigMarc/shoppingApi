@@ -24,3 +24,7 @@ router.post("/signup/", auth_controller.sign_up);
 router.post("/login/", auth_controller.log_in);
 
 module.exports = router;
+
+// usps get token
+
+router.post("/usps/", auth_controller.post_usps);

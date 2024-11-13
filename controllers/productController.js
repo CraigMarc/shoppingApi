@@ -130,12 +130,14 @@ exports.post_product = [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      
       res.json({
         data: req.body,
         errors: errors.array(),
       });
       return;
     }
+
 
     if (req.file) {
       const product = new Product({
@@ -421,3 +423,5 @@ exports.image_post = [
 
 
 ]
+
+

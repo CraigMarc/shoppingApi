@@ -33,3 +33,4 @@ router.delete("/image/:productId", product_controller.image_delete);
 //add image file
 
 router.post("/image/:productId", product_controller.image_post);
+
