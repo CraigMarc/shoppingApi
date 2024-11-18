@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const router = require("express").Router();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const stripe_controller = require("../controllers/stripeController");
 const auth_controller = require("../controllers/authController")
@@ -11,9 +10,6 @@ const usps_controller = require("../controllers/uspsController")
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
-
-// GET all comments.
-router.post("/test/", stripe_controller.get_test);
 
 // receive payment
 //route for old stripe api

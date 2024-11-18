@@ -228,7 +228,9 @@ exports.delete_product = asyncHandler(async (req, res) => {
         console.log("Delete File successful.");
       });
     }
-    //delete post
+
+    //delete product 
+
     await Product.findByIdAndDelete(req.params.productId);
     let allProducts = await Product.find().exec()
     res.status(200).json(allProducts)
