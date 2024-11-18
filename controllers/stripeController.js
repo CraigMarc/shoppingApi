@@ -1,10 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 const asyncHandler = require("express-async-handler");
 
-exports.get_test = function(req, res, next) {
-  console.log(req.body.amount)
-    res.send('test works');
-  };
+// endpoint for old stripe api
 
 exports.post_payment = function(req, res) {
  console.log(req.body.tokenId)
@@ -22,6 +19,8 @@ exports.post_payment = function(req, res) {
     }
 });
 };
+
+// endpoint for new stripe api
 
 exports.post_intent = asyncHandler(async (req, res) => {
   

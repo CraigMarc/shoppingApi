@@ -18,15 +18,18 @@ router.post("/test/", stripe_controller.get_test);
 // receive payment
 //route for old stripe api
 router.post("/payment/", stripe_controller.post_payment);
+
 // route for new stripe api
 router.post("/intent/", stripe_controller.post_intent);
+
 // route for new user
 router.post("/signup/", auth_controller.sign_up);
+
 // route for login
 router.post("/login/", auth_controller.log_in);
 
 module.exports = router;
 
-// usps get token
+// usps get shippiong price
 
 router.post("/usps/", usps_controller.post_usps);
