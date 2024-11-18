@@ -14,6 +14,7 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const productRouter = require('./routes/products')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const customerRouter = require('./routes/customers');
 
 const User = require("./models/user");
 
@@ -76,6 +77,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname)));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/customer', customerRouter);
 app.use('/products', passport.authenticate('jwt', {session: false}), productRouter);
 
 // catch 404 and forward to error handler
