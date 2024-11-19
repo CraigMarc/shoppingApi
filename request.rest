@@ -193,3 +193,23 @@ Content-Type: application/json
     
 
     }
+
+### new order
+    
+Post http://localhost:3000/users/newOrder 
+Content-Type: application/json
+
+{
+      "firstName": "Craig",
+        "lastName": "Mar",
+        "address1": "10 a st",
+        "address2": "apt 2",
+        "email": "c@yahhoo.com",
+        "town": "red bank",
+        "state": "nj",
+        "zip": "07701",
+        "shippingCost": 12.00,
+        "orderCost": 25.00,
+        "productsArray": ["item", "cost"]
+
+    }

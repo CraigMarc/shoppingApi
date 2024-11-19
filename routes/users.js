@@ -4,7 +4,7 @@ const stripe = require("stripe")(process.env.STRIPE_KEY);
 const stripe_controller = require("../controllers/stripeController");
 const auth_controller = require("../controllers/authController")
 const usps_controller = require("../controllers/uspsController")
-
+const customer_controller = require("../controllers/customerController")
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -29,3 +29,7 @@ module.exports = router;
 // usps get shippiong price
 
 router.post("/usps/", usps_controller.post_usps);
+
+// new order
+
+router.post("/newOrder/", customer_controller.post_newOrder);
