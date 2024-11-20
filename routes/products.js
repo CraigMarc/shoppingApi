@@ -43,5 +43,9 @@ router.put("/shipped/:orderId", customer_controller.shipped);
 
 // edit order
 
+router.put("/editOrder/:orderId", customer_controller.edit_order);
+
 // delete order
+
+router.delete("/deleteOrder/:orderId", customer_controller.delete_order);
 

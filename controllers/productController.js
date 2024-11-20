@@ -35,11 +35,6 @@ const upload = multer({
 });
 
 // post new product
-/*
-  exports.post_product = function(req, res, next) {
-    console.log(req.body.amount)
-      res.send('test works');
-    };*/
 
     exports.post_product = [
 
@@ -315,9 +310,6 @@ exports.publish_product = asyncHandler(async (req, res) => {
 // edit product
 
 exports.edit_product = asyncHandler(async (req, res) => {
-
-  console.log(req.body)
- console.log(req.params.productId)
 
   const product = new Product({
 

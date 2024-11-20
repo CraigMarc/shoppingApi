@@ -60,7 +60,7 @@ exports.post_newOrder = [
     .isLength({ min: 1 })
     .escape()
     .withMessage("products array must be specified."),
-   
+
 
   async function (req, res, next) {
 
@@ -109,7 +109,7 @@ exports.post_newOrder = [
 
 exports.shipped = asyncHandler(async (req, res) => {
 
- 
+
   let orderData = await Order.findById({ _id: req.params.orderId });
 
 
@@ -131,6 +131,7 @@ exports.shipped = asyncHandler(async (req, res) => {
       quantity: orderData.quantity,
       shipped: false,
       _id: req.params.orderId
+      
     });
 
     try {
@@ -187,3 +188,51 @@ exports.all_orders_get = asyncHandler(async (req, res) => {
   }
 
 });
+
+// delete order
+
+
+exports.delete_order = asyncHandler(async (req, res) => {
+
+  try {
+    await Order.findByIdAndDelete(req.params.orderId);
+    let allOrders = await Order.find().exec()
+    res.status(200).json(allOrders)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
+
+// edit order
+
+exports.edit_order = asyncHandler(async (req, res) => {
+
+  const order = new Order({
+
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      address1: req.body.address1,
+      address2: req.body.address2,
+      email: req.body.email,
+      town: req.body.town,
+      state: req.body.state,
+      zip: req.body.zip,
+      shippingCost: req.body.shippingCost,
+      orderCost: req.body.orderCost,
+      productsArray: req.body.productsArray,
+      quantity: req.body.quantity,
+      shipped: req.body.shipped,
+      _id: req.params.orderId
+    
+  });
+
+  try {
+    await Order.findByIdAndUpdate(req.params.orderId, order, {});
+    let allOrders = await Order.find().exec()
+    res.status(200).json(allOrders)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+})
