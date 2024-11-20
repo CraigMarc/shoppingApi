@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const product_controller = require("../controllers/productController")
-
-
+const customer_controller = require("../controllers/customerController")
 
 // new product 
 
@@ -33,4 +32,16 @@ router.delete("/image/:productId", product_controller.image_delete);
 //add image file
 
 router.post("/image/:productId", product_controller.image_post);
+
+// get all orders
+
+router.get("/orders/", customer_controller.all_orders_get);
+
+//change shipped status
+
+router.put("/shipped/:orderId", customer_controller.shipped);
+
+// edit order
+
+// delete order
 

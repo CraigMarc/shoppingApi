@@ -213,3 +213,16 @@ Content-Type: application/json
         "productsArray": ["item", "cost"]
 
     }
+
+### change shipping status
+
+PUT http://localhost:3000/products/shipped/673bd72d4ba82eb8d0a436dc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMyMTI4Nzg4LCJleHAiOjE3MzIxMzA3ODh9.FTUOgXFiWywz0MgD3_nt509ZyximrwnUrIZZ24ExkOs
+Content-Type: application/json
+
+### get all orders
+
+GET http://localhost:3000/products/orders 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMyMTI4Nzg4LCJleHAiOjE3MzIxMzA3ODh9.FTUOgXFiWywz0MgD3_nt509ZyximrwnUrIZZ24ExkOs
+ 
+

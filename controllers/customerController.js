@@ -3,14 +3,6 @@ const { body, validationResult } = require("express-validator");
 const Order = require("../models/orders");
 
 // new order
-/*
-exports.post_newOrder = asyncHandler(async (req, res) => {
-
-
-  res.send('respond with a resource');
-})*/
-
-// new order
 
 exports.post_newOrder = [
 
@@ -111,3 +103,87 @@ exports.post_newOrder = [
   }
 
 ]
+
+// change shippping status
+
+
+exports.shipped = asyncHandler(async (req, res) => {
+
+ 
+  let orderData = await Order.findById({ _id: req.params.orderId });
+
+
+  if (orderData.shipped == true) {
+
+    const order = new Order({
+
+      firstName: orderData.firstName,
+      lastName: orderData.lastName,
+      address1: orderData.address1,
+      address2: orderData.address2,
+      email: orderData.email,
+      town: orderData.town,
+      state: orderData.state,
+      zip: orderData.zip,
+      shippingCost: orderData.shippingCost,
+      orderCost: orderData.orderCost,
+      productsArray: orderData.productsArray,
+      quantity: orderData.quantity,
+      shipped: false,
+      _id: req.params.orderId
+    });
+
+    try {
+      await Order.findByIdAndUpdate(req.params.orderId, order, {});
+      let allOrders = await Order.find().exec()
+      res.status(200).json(allOrders)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+  if (orderData.shipped == false) {
+
+    const order = new Order({
+      firstName: orderData.firstName,
+      lastName: orderData.lastName,
+      address1: orderData.address1,
+      address2: orderData.address2,
+      email: orderData.email,
+      town: orderData.town,
+      state: orderData.state,
+      zip: orderData.zip,
+      shippingCost: orderData.shippingCost,
+      orderCost: orderData.orderCost,
+      productsArray: orderData.productsArray,
+      quantity: orderData.quantity,
+      shipped: true,
+      _id: req.params.orderId
+
+    });
+
+    try {
+      await Order.findByIdAndUpdate(req.params.orderId, order, {});
+      let allOrders = await Order.find().exec()
+      res.status(200).json(allOrders)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+
+})
+
+// get all orders
+
+exports.all_orders_get = asyncHandler(async (req, res) => {
+
+
+  try {
+    let allOrders = await Order.find().exec()
+    res.status(200).json(allOrders)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
