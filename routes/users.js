@@ -33,3 +33,7 @@ router.post("/usps/", usps_controller.post_usps);
 // new order
 
 router.post("/newOrder/", customer_controller.post_newOrder);
+
+// send confirmation email
+
+router.post("/email/", customer_controller.post_email);

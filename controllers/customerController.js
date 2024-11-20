@@ -1,6 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Order = require("../models/orders");
+const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
+dotenv.config();
 
 // new order
 
@@ -236,3 +239,41 @@ exports.edit_order = asyncHandler(async (req, res) => {
   }
 
 })
+
+// send confirmation email
+
+exports.post_email = asyncHandler(async (req, res) => {
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'cmar1455cr@gmail.com',
+      pass: process.env.EMAIL_PASSWORD
+    }
+  });
+  
+  const mailOptions = {
+    from: 'cmar1455cr@gmail.com',
+    to: 'cmarcinkiewicz2000@yahoo.com',
+    subject: 'Your recent order',
+    text: req.body.order_details
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+      res.send(error)
+    } else {
+      console.log('Email sent: ' + info.response);
+      res.send('Email sent: ' + info.response)
+    }
+  });
+/*
+  try {
+    let allOrders = await Order.find().exec()
+    res.status(200).json(allOrders)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }*/
+
+});
