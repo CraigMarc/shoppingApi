@@ -268,12 +268,6 @@ exports.post_email = asyncHandler(async (req, res) => {
       res.send('Email sent: ' + info.response)
     }
   });
-/*
-  try {
-    let allOrders = await Order.find().exec()
-    res.status(200).json(allOrders)
-  } catch (error) {
-    res.status(500).json({ message: error });
-  }*/
+
 
 });

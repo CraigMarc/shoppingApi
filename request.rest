@@ -237,7 +237,7 @@ Post http://localhost:3000/users/email
 Content-Type: application/json
 
 {
-      "order_details": "Order details"
+      "order_details": "Order details new"
        
 
     }
