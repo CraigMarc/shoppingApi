@@ -53,16 +53,9 @@ exports.post_newOrder = [
     .isLength({ min: 1 })
     .escape()
     .withMessage("shipping cost must be specified."),
-  body("orderCost")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("order cost must be specified."),
-  body("productsArray")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("products array must be specified."),
+    body("productsArray")
+    .isObject(),
+    
 
 
   async function (req, res, next) {
@@ -76,6 +69,8 @@ exports.post_newOrder = [
       });
       return;
     }
+
+    console.log(req.body)
 
     const order = new Order({
       firstName: req.body.firstName,
@@ -106,6 +101,11 @@ exports.post_newOrder = [
   }
 
 ]
+/*
+exports.post_newOrder = asyncHandler(async (req, res) => {
+console.log(req.body)
+res.send("ok")
+})*/
 
 // change shippping status
 
@@ -253,7 +253,7 @@ exports.post_email = asyncHandler(async (req, res) => {
   });
   
   const mailOptions = {
-    from: 'cmar1455cr@gmail.com',
+    from: 'This Store <cmar1455cr@gmail.com>',
     to: 'cmarcinkiewicz2000@yahoo.com',
     subject: 'Your recent order',
     text: req.body.order_details

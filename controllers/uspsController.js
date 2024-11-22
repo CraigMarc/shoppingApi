@@ -3,10 +3,12 @@ const { body, validationResult } = require("express-validator");
 const dotenv = require('dotenv');
 dotenv.config();
 
-// usps get shipping price
 
-const tokenId = process.env.CLIENT_ID 
+
+const tokenId = process.env.CLIENT_ID
 const tokenSecret = process.env.CLIENT_SECRET
+
+// usps get shipping price
 
 exports.post_usps = asyncHandler(async (req, res) => {
 
@@ -28,7 +30,7 @@ exports.post_usps = asyncHandler(async (req, res) => {
 
     .then((response) => response.json())
     .then((data) => {
-    
+
       fetchInfo(data.access_token)
 
     })
@@ -42,7 +44,7 @@ exports.post_usps = asyncHandler(async (req, res) => {
   // get shipping rate
   const fetchInfo = async (token) => {
 
-let tokenBearer = `Bearer ${token}`
+    let tokenBearer = `Bearer ${token}`
 
     fetch("https://api.usps.com/prices/v3/base-rates/search", {
       method: 'POST',
@@ -58,7 +60,7 @@ let tokenBearer = `Bearer ${token}`
         rateIndicator: req.body.rateIndicator,
         destinationEntryFacilityType: req.body.destinationEntryFacilityType,
         priceType: req.body.priceType
-      
+
       }),
       headers: {
         Authorization: tokenBearer,
@@ -71,16 +73,17 @@ let tokenBearer = `Bearer ${token}`
 
       .then((response) => response.json())
       .then((data) => {
-       res.json(data)
+        res.json(data)
 
       })
 
 
       .catch((err) => {
-        //console.log(err.message);
+        console.log(err.message);
 
       });
 
   }
 
 });
+
