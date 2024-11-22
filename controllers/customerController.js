@@ -54,9 +54,7 @@ exports.post_newOrder = [
     .escape()
     .withMessage("shipping cost must be specified."),
     body("productsArray")
-    .isObject(),
-    
-
+    .isArray(),
 
   async function (req, res, next) {
 
@@ -70,7 +68,6 @@ exports.post_newOrder = [
       return;
     }
 
-    console.log(req.body)
 
     const order = new Order({
       firstName: req.body.firstName,
@@ -101,11 +98,6 @@ exports.post_newOrder = [
   }
 
 ]
-/*
-exports.post_newOrder = asyncHandler(async (req, res) => {
-console.log(req.body)
-res.send("ok")
-})*/
 
 // change shippping status
 

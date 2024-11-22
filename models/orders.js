@@ -13,7 +13,7 @@ const OrderSchema = new Schema({
     zip: { type: String, required: true, minLength: 1 },
     shippingCost: { type: Number, required: true, minLength: 1 },
     orderCost: { type: Number, required: true, minLength: 1 },
-    productsArray: { type: [String], required: true, minLength: 1 },
+    productsArray: { type: [], required: true, minLength: 1 },
     timestamp: { type: Date, default: new Date() },
     shipped: { type: Boolean, required: true, }
 });
