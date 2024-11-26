@@ -45,36 +45,26 @@ const upload = multer({
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("title must be specified.")
-        .isAlphanumeric()
-        .withMessage("title has non-alphanumeric characters."),
+        .withMessage("title must be specified."),
       body("category")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("category must be specified.")
-        .isAlphanumeric()
-        .withMessage("catgegory has non-alphanumeric characters."),
+        .withMessage("category must be specified."),
       body("brand")
         .trim()
-        .escape()
-        .isAlphanumeric()
-        .withMessage("brand has non-alphanumeric characters."),
+        .escape(),
       body("color")
         .trim()
         .escape(),
       body("brand")
         .trim()
-        .escape()
-        .isAlphanumeric()
-        .withMessage("brand has non-alphanumeric characters."),
+        .escape(),
       body("description")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("description must be specified.")
-        .isAlphanumeric()
-        .withMessage("description has non-alphanumeric characters."),
+        .withMessage("description must be specified."),
       body("modelNum")
         .trim()
         .escape(),
@@ -82,44 +72,33 @@ const upload = multer({
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("price must be specified.")
-        .isAlphanumeric()
-        .withMessage("price has non-alphanumeric characters."),
+        .withMessage("price must be specified."),
       body("quantity")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("quantity must be specified.")
-        .isAlphanumeric()
-        .withMessage("quantity has non-alphanumeric characters."),
+        .withMessage("quantity must be specified."),
       body("length")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("length must be specified.")
-        .isAlphanumeric()
-        .withMessage("length has non-alphanumeric characters."),
+        .withMessage("length must be specified."),
       body("width")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("width must be specified.")
-        .isAlphanumeric()
-        .withMessage("width has non-alphanumeric characters."),
+        .withMessage("width must be specified."),
       body("height")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("height must be specified.")
-        .isAlphanumeric()
-        .withMessage("height has non-alphanumeric characters."),
+        .withMessage("height must be specified."),
       body("weight")
         .trim()
         .isLength({ min: 1 })
         .escape()
-        .withMessage("weight must be specified.")
-        .isAlphanumeric()
-        .withMessage("weight has non-alphanumeric characters."),
+        .withMessage("weight must be specified."),
+       
     
       async function (req, res, next) {
     
