@@ -7,9 +7,6 @@ const customer_controller = require("../controllers/customerController")
 
 router.post("/new/", product_controller.post_product);
 
-// get all products
-
-router.get("/all/", product_controller.all_products_get);
 
 // delete product
 

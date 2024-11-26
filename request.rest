@@ -104,8 +104,8 @@ Content-Type: image/jpeg
 
 ### get all products
 
-GET http://localhost:3000/products/all 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NTM4NzM3LCJleHAiOjE3Mjc1NDA3Mzd9.Yl919elSS7esKRgPfg0deKaaTU9TC5gfNMVIk64BUNU
+GET http://localhost:3000/users/all 
+
  
 
 ### delete product

@@ -5,6 +5,7 @@ const stripe_controller = require("../controllers/stripeController");
 const auth_controller = require("../controllers/authController")
 const usps_controller = require("../controllers/uspsController")
 const customer_controller = require("../controllers/customerController")
+const product_controller = require("../controllers/productController")
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -37,4 +38,9 @@ router.post("/newOrder/", customer_controller.post_newOrder);
 // send confirmation email
 
 router.post("/email/", customer_controller.post_email);
+
+// get all products
+
+router.get("/all/", product_controller.all_products_get);
+
 
