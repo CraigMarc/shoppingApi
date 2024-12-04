@@ -258,38 +258,3 @@ Content-Type: application/json
        
 
     }
-
-### curl new order
-
-curl -X POST -H "Content-Type:application/json" http://localhost:3000/users/newOrder -d '{
-      "firstName": "Craig",
-        "lastName": "Mar",
-        "address1": "10 a st",
-        "address2": "apt 2",
-        "email": "c@yahhoo.com",
-        "town": "red bank",
-        "state": "nj",
-        "zip": "07701",
-        "shippingCost": 12.00,
-        "orderCost": 25.00,
-        "productsArray": [
-    {
-        "id": "4a482549-79aa-4798-8a3b-a19746cd645a",
-        "title": "Microsoft Xbox X/S Wireless Controller Robot White",
-        "price": 57,
-        "quantity": 1,
-        "total": "57.00",
-        "image": "https://storage.googleapis.com/fir-auth-1c3bc.appspot.com/1692255251854-xbox.jpg"
-    },
-    {
-        "id": "827ab3f1-b5d5-436a-93cc-7a4a28aefd3b",
-        "title": "Sony WH-1000XM3 Bluetooth Wireless Over Ear Headphones with Mic (Silver)",
-        "price": 773,
-        "quantity": "2",
-        "total": "1546.00",
-        "image": "https://storage.googleapis.com/fir-auth-1c3bc.appspot.com/1692947383286-714WUJlhbLS._SL1500_.jpg"
-    }
-]
-
-    }'
-

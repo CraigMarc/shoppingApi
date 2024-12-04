@@ -1,9 +1,11 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Order = require("../models/orders");
+const Product = require("../models/inventory");
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
+
 
 // new order
 
@@ -76,6 +78,27 @@ exports.post_newOrder = [
     }
 
 
+    // subtract ordered product from inventory
+    /*
+        const product = new Product({
+    
+          title: req.body.productsArray[0].title,
+            category: req.body.productsArray[0].category,
+            brand: req.body.productsArray[0].brand,
+            color: req.body.productsArray[0].color,
+            description: req.body.productsArray[0].description,
+            modelNum: req.body.productsArray[0].modelNum,
+            price: req.body.productsArray[0].price,
+            length: req.body.productsArray[0].length,
+            width: req.body.productsArray[0].width,
+            height: req.body.productsArray[0].height,
+            weight: req.body.productsArray[0].weight,
+            quantity: req.body.quantity,
+            published: req.body.productsArray[0].published,
+            _id: req.body.productsArray[0].productId
+          
+        });*/
+
     const order = new Order({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -88,12 +111,44 @@ exports.post_newOrder = [
       shippingCost: req.body.shippingCost,
       orderCost: req.body.orderCost,
       productsArray: req.body.productsArray,
-      quantity: req.body.quantity,
       shipped: false
 
     });
+
+
     try {
       await order.save()
+
+      // loop through product array and subtract from inventory
+      for (let i = 0; i < req.body.productsArray.length; i++) {
+      // find products
+      let productFind = await Product.findById(req.body.productsArray[i].id);
+
+      let newQuantity = productFind.quantity - req.body.productsArray[i].quantity
+
+      const product = new Product({
+
+        title: req.body.productsArray[i].title,
+        category: req.body.productsArray[i].category,
+        brand: req.body.productsArray[i].brand,
+        color: req.body.productsArray[i].color,
+        description: req.body.productsArray[i].description,
+        modelNum: req.body.productsArray[i].modelNum,
+        price: req.body.productsArray[i].price,
+        length: req.body.productsArray[i].length,
+        width: req.body.productsArray[i].width,
+        height: req.body.productsArray[i].height,
+        weight: req.body.productsArray[i].weight,
+        quantity: newQuantity,
+        published: req.body.productsArray[i].published,
+        _id: req.body.productsArray[i].id
+
+      });
+
+      await Product.findByIdAndUpdate(req.body.productsArray[i].id, product, {});
+
+    }
+
       let allOrders = await Order.find().exec()
       res.status(200).json(allOrders)
     } catch (error) {
