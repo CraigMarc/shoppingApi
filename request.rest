@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### multipart form request with webkit
 POST http://localhost:3000/products/new HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMyNTgwMjQ4LCJleHAiOjE3MzI1ODIyNDh9.AJ7V_rz_22QE0J3K3vkWbpE7B-BP56LPeAy7xMCq6ho
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMzMzQxNDU0LCJleHAiOjE3MzMzNDM0NTR9.QQwy6KAK1w0t81CP2gZZYoKgBF55ZQGWBJbWBKTZ71w
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
@@ -181,11 +181,11 @@ Content-Type: application/json
 {
       "originZIPCode": "22407",
         "destinationZIPCode": "63118",
-        "weight": 5,
-        "length": 3,
-        "width": 2,
-        "height": 1,
-        "mailClass": "USPS_GROUND_ADVANTAGE",
+        "weight": 20,
+        "length": 13,
+        "width": 12,
+        "height": 24,
+        "mailClass": "USPS_RETAIL_GROUND",
         "processingCategory": "NON_MACHINABLE",
         "rateIndicator": "SP",
         "destinationEntryFacilityType": "NONE",
@@ -216,15 +216,14 @@ Content-Type: application/json
         "title": "Microsoft Xbox X/S Wireless Controller Robot White",
         "price": 57,
         "quantity": 1,
-        "total": "57.00",
         "image": "https://storage.googleapis.com/fir-auth-1c3bc.appspot.com/1692255251854-xbox.jpg"
     },
     {
         "id": "827ab3f1-b5d5-436a-93cc-7a4a28aefd3b",
         "title": "Sony WH-1000XM3 Bluetooth Wireless Over Ear Headphones with Mic (Silver)",
         "price": 773,
-        "quantity": "2",
-        "total": "1546.00",
+        "quantity": 2,
+        "total": 1546.00,
         "image": "https://storage.googleapis.com/fir-auth-1c3bc.appspot.com/1692947383286-714WUJlhbLS._SL1500_.jpg"
     }
     

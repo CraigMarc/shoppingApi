@@ -51,9 +51,16 @@ exports.post_newOrder = [
   body("shippingCost")
     .trim()
     .isLength({ min: 1 })
+    .isNumeric()
     .escape()
     .withMessage("shipping cost must be specified."),
-    body("productsArray")
+  body("orderCost")
+    .trim()
+    .isLength({ min: 1 })
+    .isNumeric()
+    .escape()
+    .withMessage("order cost must be specified."),
+  body("productsArray")
     .isArray(),
 
   async function (req, res, next) {
@@ -126,7 +133,7 @@ exports.shipped = asyncHandler(async (req, res) => {
       quantity: orderData.quantity,
       shipped: false,
       _id: req.params.orderId
-      
+
     });
 
     try {
@@ -205,21 +212,21 @@ exports.edit_order = asyncHandler(async (req, res) => {
 
   const order = new Order({
 
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      address1: req.body.address1,
-      address2: req.body.address2,
-      email: req.body.email,
-      town: req.body.town,
-      state: req.body.state,
-      zip: req.body.zip,
-      shippingCost: req.body.shippingCost,
-      orderCost: req.body.orderCost,
-      productsArray: req.body.productsArray,
-      quantity: req.body.quantity,
-      shipped: req.body.shipped,
-      _id: req.params.orderId
-    
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    address1: req.body.address1,
+    address2: req.body.address2,
+    email: req.body.email,
+    town: req.body.town,
+    state: req.body.state,
+    zip: req.body.zip,
+    shippingCost: req.body.shippingCost,
+    orderCost: req.body.orderCost,
+    productsArray: req.body.productsArray,
+    quantity: req.body.quantity,
+    shipped: req.body.shipped,
+    _id: req.params.orderId
+
   });
 
   try {
@@ -243,15 +250,15 @@ exports.post_email = asyncHandler(async (req, res) => {
       pass: process.env.EMAIL_PASSWORD
     }
   });
-  
+
   const mailOptions = {
     from: 'This Store <cmar1455cr@gmail.com>',
     to: 'cmarcinkiewicz2000@yahoo.com',
     subject: 'Your recent order',
     text: req.body.order_details
   };
-  
-  transporter.sendMail(mailOptions, function(error, info){
+
+  transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
       res.send(error)

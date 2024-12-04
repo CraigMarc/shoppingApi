@@ -71,31 +71,37 @@ const upload = multer({
       body("price")
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .escape()
         .withMessage("price must be specified."),
       body("quantity")
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .escape()
         .withMessage("quantity must be specified."),
       body("length")
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .escape()
         .withMessage("length must be specified."),
       body("width")
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .escape()
         .withMessage("width must be specified."),
       body("height")
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .escape()
         .withMessage("height must be specified."),
       body("weight")
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .escape()
         .withMessage("weight must be specified."),
        

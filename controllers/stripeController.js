@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 // endpoint for old stripe api
 
 exports.post_payment = function(req, res) {
- console.log(req.body.tokenId)
+
 
   stripe.charges.create({
     source: req.body.tokenId,
