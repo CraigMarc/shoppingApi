@@ -308,7 +308,7 @@ exports.post_email = asyncHandler(async (req, res) => {
 
   const mailOptions = {
     from: 'This Store <cmar1455cr@gmail.com>',
-    to: 'cmarcinkiewicz2000@yahoo.com',
+    to: req.body.email,
     subject: 'Your recent order',
     text: req.body.order_details
   };

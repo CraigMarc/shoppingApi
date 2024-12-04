@@ -254,7 +254,7 @@ Post http://localhost:3000/users/email
 Content-Type: application/json
 
 {
-      "order_details": "Order details new"
-       
+      "order_details": "Order details new",
+       "email": "cmarcinkiewicz2000@yahoo.com"
 
     }
