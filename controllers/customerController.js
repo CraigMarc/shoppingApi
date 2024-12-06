@@ -106,7 +106,7 @@ exports.post_newOrder = [
       let duplicate = await Order.findOne({ orderId: req.body.orderId });
 
       if (duplicate) {
-        console.log('dup')
+       
        return res.json({ message: "duplicate order" })
       }
       
@@ -295,6 +295,10 @@ exports.edit_order = asyncHandler(async (req, res) => {
 
 exports.post_email = asyncHandler(async (req, res) => {
 
+  let duplicate = await Order.findOne({ orderId: req.body.orderId });
+
+  if (!duplicate) {
+
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -316,9 +320,15 @@ exports.post_email = asyncHandler(async (req, res) => {
       res.send(error)
     } else {
       console.log('Email sent: ' + info.response);
-      res.send('Email sent: ' + info.response)
+      res.json({Email: "sent"  + info.response})
     }
   });
+
+  }
+  
+  else {
+    res.json({Email: "not sent duplicate"})
+  }
 
 
 });

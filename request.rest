@@ -181,11 +181,11 @@ Content-Type: application/json
 {
       "originZIPCode": "22407",
         "destinationZIPCode": "63118",
-        "weight": 20,
-        "length": 13,
-        "width": 12,
+        "weight": 20.25,
+        "length": 14.5,
+        "width": 12.5,
         "height": 24,
-        "mailClass": "USPS_RETAIL_GROUND",
+        "mailClass": "USPS_GROUND_ADVANTAGE",
         "processingCategory": "NON_MACHINABLE",
         "rateIndicator": "SP",
         "destinationEntryFacilityType": "NONE",
@@ -201,6 +201,7 @@ Post http://localhost:3000/users/newOrder
 Content-Type: application/json
 
 {
+      "orderId": "12edf",
       "firstName": "Craig",
         "lastName": "Mar",
         "address1": "10 a st",
