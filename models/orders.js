@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
+    orderId: { type: String, required: true, minLength: 1 },
     firstName: { type: String, required: true, minLength: 1 },
     lastName: { type: String, required: true, minLength: 1 },
     address1: { type: String, required: true, minLength: 1 },

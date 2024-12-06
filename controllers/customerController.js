@@ -11,6 +11,11 @@ dotenv.config();
 
 exports.post_newOrder = [
 
+  body("orderId")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("orderId must be specified."),
   body("firstName")
     .trim()
     .isLength({ min: 1 })
@@ -78,28 +83,8 @@ exports.post_newOrder = [
     }
 
 
-    // subtract ordered product from inventory
-    /*
-        const product = new Product({
-    
-          title: req.body.productsArray[0].title,
-            category: req.body.productsArray[0].category,
-            brand: req.body.productsArray[0].brand,
-            color: req.body.productsArray[0].color,
-            description: req.body.productsArray[0].description,
-            modelNum: req.body.productsArray[0].modelNum,
-            price: req.body.productsArray[0].price,
-            length: req.body.productsArray[0].length,
-            width: req.body.productsArray[0].width,
-            height: req.body.productsArray[0].height,
-            weight: req.body.productsArray[0].weight,
-            quantity: req.body.quantity,
-            published: req.body.productsArray[0].published,
-            _id: req.body.productsArray[0].productId
-          
-        });*/
-
     const order = new Order({
+      orderId: req.body.orderId,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       address1: req.body.address1,
@@ -117,37 +102,47 @@ exports.post_newOrder = [
 
 
     try {
-      await order.save()
+
+      let duplicate = await Order.findOne({ orderId: req.body.orderId });
+
+      if (duplicate) {
+        console.log('dup')
+       return res.json({ message: "duplicate order" })
+      }
+      
+      if (!duplicate) {
+        await order.save()
+      }
 
       // loop through product array and subtract from inventory
       for (let i = 0; i < req.body.productsArray.length; i++) {
-      // find products
-      let productFind = await Product.findById(req.body.productsArray[i].id);
+        // find products
+        let productFind = await Product.findById(req.body.productsArray[i].id);
 
-      let newQuantity = productFind.quantity - req.body.productsArray[i].quantity
+        let newQuantity = productFind.quantity - req.body.productsArray[i].quantity
 
-      const product = new Product({
+        const product = new Product({
 
-        title: req.body.productsArray[i].title,
-        category: req.body.productsArray[i].category,
-        brand: req.body.productsArray[i].brand,
-        color: req.body.productsArray[i].color,
-        description: req.body.productsArray[i].description,
-        modelNum: req.body.productsArray[i].modelNum,
-        price: req.body.productsArray[i].price,
-        length: req.body.productsArray[i].length,
-        width: req.body.productsArray[i].width,
-        height: req.body.productsArray[i].height,
-        weight: req.body.productsArray[i].weight,
-        quantity: newQuantity,
-        published: req.body.productsArray[i].published,
-        _id: req.body.productsArray[i].id
+          title: req.body.productsArray[i].title,
+          category: req.body.productsArray[i].category,
+          brand: req.body.productsArray[i].brand,
+          color: req.body.productsArray[i].color,
+          description: req.body.productsArray[i].description,
+          modelNum: req.body.productsArray[i].modelNum,
+          price: req.body.productsArray[i].price,
+          length: req.body.productsArray[i].length,
+          width: req.body.productsArray[i].width,
+          height: req.body.productsArray[i].height,
+          weight: req.body.productsArray[i].weight,
+          quantity: newQuantity,
+          published: req.body.productsArray[i].published,
+          _id: req.body.productsArray[i].id
 
-      });
+        });
 
-      await Product.findByIdAndUpdate(req.body.productsArray[i].id, product, {});
+        await Product.findByIdAndUpdate(req.body.productsArray[i].id, product, {});
 
-    }
+      }
 
       let allOrders = await Order.find().exec()
       res.status(200).json(allOrders)
@@ -170,7 +165,7 @@ exports.shipped = asyncHandler(async (req, res) => {
   let orderData = await Order.findById({ _id: req.params.orderId });
 
 
-  if (orderData.shipped == true) {
+  if (orderData.shipped == true && !duplicate) {
 
     const order = new Order({
 
@@ -192,6 +187,8 @@ exports.shipped = asyncHandler(async (req, res) => {
     });
 
     try {
+
+  
       await Order.findByIdAndUpdate(req.params.orderId, order, {});
       let allOrders = await Order.find().exec()
       res.status(200).json(allOrders)
@@ -200,7 +197,7 @@ exports.shipped = asyncHandler(async (req, res) => {
     }
   }
 
-  if (orderData.shipped == false) {
+  if (orderData.shipped == false  && !duplicate) {
 
     const order = new Order({
       firstName: orderData.firstName,
