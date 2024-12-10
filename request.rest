@@ -36,7 +36,7 @@ Content-Type: application/json
 ### new product
 
 Post http://localhost:3000/products/new 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMyNTgwMjQ4LCJleHAiOjE3MzI1ODIyNDh9.AJ7V_rz_22QE0J3K3vkWbpE7B-BP56LPeAy7xMCq6ho
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMzODU3MDMxLCJleHAiOjE3MzM4NTkwMzF9.qri07G-oEboSnN_6SkmSzc4UTcD9iApKRFNxxOVFP1w
 Content-Type: application/json
 
 {"title":"edit test", "text":"edit Lorem ipsum dolor sit " }
@@ -44,7 +44,7 @@ Content-Type: application/json
 
 ### multipart form request with webkit
 POST http://localhost:3000/products/new HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMzMzQxNDU0LCJleHAiOjE3MzMzNDM0NTR9.QQwy6KAK1w0t81CP2gZZYoKgBF55ZQGWBJbWBKTZ71w
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMzODU5MTY1LCJleHAiOjE3MzM4NjExNjV9.7U5T2RMLIiy5z_XYyrCVqiuawY8Ivp7e-JujkTi2Q6g
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
@@ -128,7 +128,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtY
 
 ### add pic to product
 POST http://localhost:3000/products/image/66f71e4c586e6e1d9a3774ef HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzI3NDcxMDQ3LCJleHAiOjE3Mjc0NzMwNDd9.7MM4QQy7nwdfMbj-hXNGVTzzja3ZfRrrbHITFd4CXJk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMzODU0OTM0LCJleHAiOjE3MzM4NTY5MzR9.OCmCoKlNNnPewFK9DIJYvJxwILtmHQwgfWjp0ffWSa4
+Content-Type: multipart/form-data; boundary=MfnBoundry
+
+--MfnBoundry
+Content-Disposition: form-data; name="image"; filename="./me.JPG" 
+Content-Type: image/jpeg
+
+< ./me.JPG 
+--MfnBoundry--
+
+### resize pic
+POST http://localhost:3000/products/resize HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzMzODU0OTM0LCJleHAiOjE3MzM4NTY5MzR9.OCmCoKlNNnPewFK9DIJYvJxwILtmHQwgfWjp0ffWSa4
 Content-Type: multipart/form-data; boundary=MfnBoundry
 
 --MfnBoundry
