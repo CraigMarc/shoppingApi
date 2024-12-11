@@ -6,8 +6,8 @@ const Product = require("../models/inventory");
 const fs = require('fs');
 const sharp = require('sharp');
 
-
-// set up multer for pic uploads
+/*
+// set up multer for pic uploads ************* delete later
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -38,11 +38,11 @@ const upload = multer({
   fileFilter: fileFilter
 });
 
+*/
 
+// use multer to upload and sharp to resize pics
 
-// use multer and sharp to resize pics
-
-// memory storage so pic can be resized
+// use memory storage so pic can be resized
 
 const memstorage = multer.memoryStorage();
 
@@ -174,7 +174,7 @@ exports.post_product = [
         let allProducts = await Product.find().exec()
 
         //save and resize pic
-        await sharp(req.file.buffer).resize(300, 300).toFile(path);
+        await sharp(req.file.buffer).resize(500, 375).toFile(path);
       
         res.status(200).json(allProducts)
       } catch (error) {
@@ -437,7 +437,7 @@ exports.image_post = [
 
     try {
       //save and resize pic
-      await sharp(req.file.buffer).resize(300, 300).toFile(path);
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
 
       await Product.findByIdAndUpdate(req.params.productId, product, {});
       let allProducts = await Product.find().exec()
