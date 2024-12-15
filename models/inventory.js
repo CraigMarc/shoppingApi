@@ -9,14 +9,9 @@ const ProductSchema = new Schema({
   color: { type: String, minLength: 1 },
   description: { type: String, required: true, minLength: 1 },
   modelNum: { type: String, minLength: 1 },
-  quantity: { type: Number, required: true, minLength: 1 },
-  price: { type: Number, required: true, minLength: 1 },
-  length: { type: Number, required: true, minLength: 1 },
-  width: { type: Number, required: true, minLength: 1 },
-  height: { type: Number, required: true, minLength: 1 },
-  weight: { type: Number, required: true, minLength: 1 },
+  productsArray: { type: [] }, 
   published: { type: Boolean },
-  image: { type: String }, 
+   
 });
 
 
