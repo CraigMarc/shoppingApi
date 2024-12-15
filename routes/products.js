@@ -46,3 +46,6 @@ router.put("/editOrder/:orderId", customer_controller.edit_order);
 
 router.delete("/deleteOrder/:orderId", customer_controller.delete_order);
 
+// upload new pic
+
+router.post("/new_image/", product_controller.new_image);

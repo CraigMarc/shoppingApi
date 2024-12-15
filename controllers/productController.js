@@ -450,4 +450,35 @@ exports.image_post = [
 
 ]
 
+// new image 
+
+exports.new_image = [
+
+  // Handle single file upload with field name "image"
+  //upload.single("image"),
+  imageUploader.single('image'),
+
+  async function (req, res) {
+
+
+    // path: where to store resized photo
+    let extArray = req.file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+    try {
+      //save and resize pic
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+
+      
+      res.status(200).json({image: path})
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+
+]
+
+
 
