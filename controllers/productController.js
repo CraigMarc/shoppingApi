@@ -482,7 +482,7 @@ exports.new_image = [
 
 // product submit new
 
-exports.post_product = [
+exports.post_product1 = [
 
   body("title")
     .trim()
@@ -518,46 +518,6 @@ exports.post_product = [
       return;
     }
 
-/*
-    if (req.file) {
-
-       // path: where to store resized photo
-       let extArray = req.file.mimetype.split("/");
-       let extension = extArray[extArray.length - 1];
-       const path = `./uploads/image-${Date.now() + '.' + extension}`
-
-      const product = new Product({
-        title: req.body.title,
-        category: req.body.category,
-        brand: req.body.brand,
-        color: req.body.color,
-        description: req.body.description,
-        modelNum: req.body.modelNum,
-        price: req.body.price,
-        length: req.body.length,
-        width: req.body.width,
-        height: req.body.height,
-        weight: req.body.weight,
-        quantity: req.body.quantity,
-        published: false,
-        image: path
-      });
-      try {
-
-
-        await product.save()
-        let allProducts = await Product.find().exec()
-
-        //save and resize pic
-        await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      
-        res.status(200).json(allProducts)
-      } catch (error) {
-
-        res.status(500).json({ message: error });
-      }
-    }*/
-
     
       const product = new Product({
         title: req.body.title,
@@ -565,13 +525,14 @@ exports.post_product = [
         brand: req.body.brand,
         description: req.body.description,
         modelNum: req.body.modelNum,
+        product_id: req.body.product_id,
         published: false
 
       });
       try {
         await product.save()
-        let allProducts = await Product.find().exec()
-        res.status(200).json(allProducts)
+        let newProducts = await Product.findOne({product_id: req.body.product_id }).exec()
+        res.status(200).json(newProducts)
       } catch (error) {
         res.status(500).json({ message: error });
       }

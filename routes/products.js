@@ -49,3 +49,7 @@ router.delete("/deleteOrder/:orderId", customer_controller.delete_order);
 // upload new pic
 
 router.post("/new_image/", product_controller.new_image);
+
+// product1
+
+router.post("/new_product1/", product_controller.post_product1);

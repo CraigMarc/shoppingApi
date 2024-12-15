@@ -9,6 +9,7 @@ const ProductSchema = new Schema({
   color: { type: String, minLength: 1 },
   description: { type: String, required: true, minLength: 1 },
   modelNum: { type: String, minLength: 1 },
+  product_id: { type: String, minLength: 1 },
   productsArray: { type: [] }, 
   published: { type: Boolean },
    
