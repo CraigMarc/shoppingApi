@@ -544,3 +544,38 @@ exports.post_product1 = [
 ]
 
 
+// add product to product array
+
+exports.add_product = asyncHandler(async (req, res) => {
+
+  console.log(req.body)
+
+  let productData = await Product.findById(req.body.current_id);
+
+  const newData = [...productData.productsArray, req.body.products_array]
+  
+
+  const product = new Product({
+
+    title: productData.title,
+    category: productData.category,
+    brand: productData.brand,
+    color: productData.color,
+    description: productData.description,
+    modelNum: productData.modelNum,
+    published: productData.published,
+    productsArray: newData,
+    _id: req.body.current_id,
+   
+  });
+
+
+  try {
+    await Product.findByIdAndUpdate(req.body.current_id, product, {});
+    let newProducts = await Product.findById(req.body.current_id);
+    res.status(200).json(newProducts)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+})

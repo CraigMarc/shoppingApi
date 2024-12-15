@@ -53,3 +53,7 @@ router.post("/new_image/", product_controller.new_image);
 // product1
 
 router.post("/new_product1/", product_controller.post_product1);
+
+// add product array
+
+router.put("/product_array/", product_controller.add_product);
