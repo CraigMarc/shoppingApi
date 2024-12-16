@@ -495,7 +495,7 @@ else {
  console.log(newImArr)
 }
 let newArr = {...productData.productsArray[req.body.array_number], images: newImArr}
-
+productData.productsArray[req.body.array_number] = newArr
 
   
       const product = new Product({
@@ -506,7 +506,7 @@ let newArr = {...productData.productsArray[req.body.array_number], images: newIm
         description: productData.description,
         modelNum: productData.modelNum,
         published: productData.published,
-        productsArray: newArr,
+        productsArray: productData.productsArray,
         _id: req.body.current_id,
       });
   
