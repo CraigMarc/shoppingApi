@@ -460,7 +460,7 @@ exports.new_image = [
 
   async function (req, res) {
 
-
+/*
     // path: where to store resized photo
     let extArray = req.file.mimetype.split("/");
     let extension = extArray[extArray.length - 1];
@@ -474,7 +474,53 @@ exports.new_image = [
       res.status(200).json({image: path})
     } catch (error) {
       res.status(500).json({ message: error });
-    }
+    }*/
+
+      
+      let productData = await Product.findById(req.body.current_id);
+
+      // path: where to store resized photo
+      let extArray = req.file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+let newImArr = [] 
+if (!productData.productsArray[req.body.array_number].images) {
+  newImArr.push(path)
+  
+}
+else {
+  newImArr = structuredClone(productData.productsArray[req.body.array_number].images) 
+  newImArr.push(path)
+ console.log(newImArr)
+}
+let newArr = {...productData.productsArray[req.body.array_number], images: newImArr}
+
+
+  
+      const product = new Product({
+  
+        title: productData.title,
+        category: productData.category,
+        brand: productData.brand,
+        description: productData.description,
+        modelNum: productData.modelNum,
+        published: productData.published,
+        productsArray: newArr,
+        _id: req.body.current_id,
+      });
+  
+      try {
+        //save and resize pic
+        await sharp(req.file.buffer).resize(500, 375).toFile(path);
+  
+        await Product.findByIdAndUpdate(req.body.current_id, product, {});
+        let newProducts = await Product.findById(req.body.current_id);
+        res.status(200).json(newProducts)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+
   }
 
 
@@ -548,7 +594,6 @@ exports.post_product1 = [
 
 exports.add_product = asyncHandler(async (req, res) => {
 
-  console.log(req.body)
 
   let productData = await Product.findById(req.body.current_id);
 
@@ -560,7 +605,6 @@ exports.add_product = asyncHandler(async (req, res) => {
     title: productData.title,
     category: productData.category,
     brand: productData.brand,
-    color: productData.color,
     description: productData.description,
     modelNum: productData.modelNum,
     published: productData.published,
