@@ -485,17 +485,17 @@ exports.new_image = [
       const path = `./uploads/image-${Date.now() + '.' + extension}`
 
 let newImArr = [] 
-if (!productData.productsArray[req.body.array_number].images) {
+if (!productData.colorArray[req.body.array_number].images) {
   newImArr.push(path)
   
 }
 else {
-  newImArr = structuredClone(productData.productsArray[req.body.array_number].images) 
+  newImArr = structuredClone(productData.colorArray[req.body.array_number].images) 
   newImArr.push(path)
- console.log(newImArr)
+ 
 }
-let newArr = {...productData.productsArray[req.body.array_number], images: newImArr}
-productData.productsArray[req.body.array_number] = newArr
+let newArr = {...productData.colorArray[req.body.array_number], images: newImArr}
+productData.colorArray[req.body.array_number] = newArr
 
   
       const product = new Product({
@@ -506,7 +506,7 @@ productData.productsArray[req.body.array_number] = newArr
         description: productData.description,
         modelNum: productData.modelNum,
         published: productData.published,
-        productsArray: productData.productsArray,
+        colorArray: productData.colorArray,
         _id: req.body.current_id,
       });
   
@@ -597,7 +597,7 @@ exports.add_product = asyncHandler(async (req, res) => {
 
   let productData = await Product.findById(req.body.current_id);
 
-  const newData = [...productData.productsArray, req.body.products_array]
+  const newData = [...productData.colorArray, req.body.color_array]
   
 
   const product = new Product({
@@ -608,7 +608,7 @@ exports.add_product = asyncHandler(async (req, res) => {
     description: productData.description,
     modelNum: productData.modelNum,
     published: productData.published,
-    productsArray: newData,
+    colorArray: newData,
     _id: req.body.current_id,
    
   });

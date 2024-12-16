@@ -10,7 +10,7 @@ const ProductSchema = new Schema({
   description: { type: String, required: true, minLength: 1 },
   modelNum: { type: String, minLength: 1 },
   product_id: { type: String, minLength: 1 },
-  productsArray: { type: [] }, 
+  colorArray: { type: [] }, 
   published: { type: Boolean },
    
 });
