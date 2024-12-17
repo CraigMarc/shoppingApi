@@ -551,6 +551,8 @@ exports.post_product1 = [
   body("modelNum")
     .trim()
     .escape(),
+    body("colorArray")
+    .isArray(),
 
 
   async function (req, res, next) {
@@ -572,6 +574,7 @@ exports.post_product1 = [
         description: req.body.description,
         modelNum: req.body.modelNum,
         product_id: req.body.product_id,
+        colorArray: req.body.colorArray,
         published: false
 
       });
