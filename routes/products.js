@@ -56,4 +56,4 @@ router.post("/new_product1/", product_controller.post_product1);
 
 // add product array
 
-router.put("/product_array/", product_controller.add_product);
+//router.put("/product_array/", product_controller.add_product);

@@ -146,10 +146,10 @@ exports.post_product = [
 
     if (req.file) {
 
-       // path: where to store resized photo
-       let extArray = req.file.mimetype.split("/");
-       let extension = extArray[extArray.length - 1];
-       const path = `./uploads/image-${Date.now() + '.' + extension}`
+      // path: where to store resized photo
+      let extArray = req.file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      const path = `./uploads/image-${Date.now() + '.' + extension}`
 
       const product = new Product({
         title: req.body.title,
@@ -175,7 +175,7 @@ exports.post_product = [
 
         //save and resize pic
         await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      
+
         res.status(200).json(allProducts)
       } catch (error) {
 
@@ -233,41 +233,28 @@ exports.all_products_get = asyncHandler(async (req, res) => {
 
 exports.delete_product = asyncHandler(async (req, res) => {
 
-  
+
   try {
     //find pic file
     let picProduct = await Product.findById(req.params.productId);
-   
-    for (let i=0; i<picProduct.colorArray.length; i++) {
+
+    for (let i = 0; i < picProduct.colorArray.length; i++) {
       if (picProduct.colorArray[i].images) {
-      for (let x=0; x<picProduct.colorArray[i].images.length; x++) {
-        let pic = picProduct.colorArray[i].images[x]
-        console.log(pic)
-        fs.unlink(pic, (err) => {
-          if (err) {
-            throw err;
-          }
-  
-          console.log("Delete File successful.");
-        });
-      }
-    }
+        for (let x = 0; x < picProduct.colorArray[i].images.length; x++) {
+          let pic = picProduct.colorArray[i].images[x]
+          console.log(pic)
+          fs.unlink(pic, (err) => {
+            if (err) {
+              throw err;
+            }
 
-    }
-
-
-    
-    /*
-    //delete pic file
-    if (picProduct.image) {
-      fs.unlink(picProduct.image, (err) => {
-        if (err) {
-          throw err;
+            console.log("Delete File successful.");
+          });
         }
+      }
 
-        console.log("Delete File successful.");
-      });
-    }*/
+    }
+
 
     //delete product 
 
@@ -290,7 +277,6 @@ exports.publish_product = asyncHandler(async (req, res) => {
   let productData = await Product.findById({ _id: req.params.productId });
 
 
-
   if (productData.published == true) {
 
     const product = new Product({
@@ -298,15 +284,10 @@ exports.publish_product = asyncHandler(async (req, res) => {
       title: productData.title,
       category: productData.category,
       brand: productData.brand,
-      color: productData.color,
       description: productData.description,
       modelNum: productData.modelNum,
-      price: productData.price,
-      length: productData.length,
-      width: productData.width,
-      height: productData.height,
-      weight: productData.weight,
-      quantity: productData.quantity,
+      published: productData.published,
+      colorArray: productData.colorArray,
       published: false,
       _id: req.params.productId
     });
@@ -327,15 +308,10 @@ exports.publish_product = asyncHandler(async (req, res) => {
       title: productData.title,
       category: productData.category,
       brand: productData.brand,
-      color: productData.color,
       description: productData.description,
       modelNum: productData.modelNum,
-      price: productData.price,
-      length: productData.length,
-      width: productData.width,
-      height: productData.height,
-      weight: productData.weight,
-      quantity: productData.quantity,
+      published: productData.published,
+      colorArray: productData.colorArray,
       published: true,
       _id: req.params.productId
 
@@ -481,50 +457,50 @@ exports.new_image = [
   imageUploader.single('image'),
 
   async function (req, res) {
-      
-      let productData = await Product.findById(req.body.current_id);
 
-      // path: where to store resized photo
-      let extArray = req.file.mimetype.split("/");
-      let extension = extArray[extArray.length - 1];
-      const path = `./uploads/image-${Date.now() + '.' + extension}`
+    let productData = await Product.findById(req.body.current_id);
 
-let newImArr = [] 
-if (!productData.colorArray[req.body.array_number].images) {
-  newImArr.push(path)
-  
-}
-else {
-  newImArr = structuredClone(productData.colorArray[req.body.array_number].images) 
-  newImArr.push(path)
- 
-}
-let newArr = {...productData.colorArray[req.body.array_number], images: newImArr}
-productData.colorArray[req.body.array_number] = newArr
+    // path: where to store resized photo
+    let extArray = req.file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    const path = `./uploads/image-${Date.now() + '.' + extension}`
 
-  
-      const product = new Product({
-  
-        title: productData.title,
-        category: productData.category,
-        brand: productData.brand,
-        description: productData.description,
-        modelNum: productData.modelNum,
-        published: productData.published,
-        colorArray: productData.colorArray,
-        _id: req.body.current_id,
-      });
-  
-      try {
-        //save and resize pic
-        await sharp(req.file.buffer).resize(500, 375).toFile(path);
-  
-        await Product.findByIdAndUpdate(req.body.current_id, product, {});
-        let newProducts = await Product.findById(req.body.current_id);
-        res.status(200).json(newProducts)
-      } catch (error) {
-        res.status(500).json({ message: error });
-      }
+    let newImArr = []
+    if (!productData.colorArray[req.body.array_number].images) {
+      newImArr.push(path)
+
+    }
+    else {
+      newImArr = structuredClone(productData.colorArray[req.body.array_number].images)
+      newImArr.push(path)
+
+    }
+    let newArr = { ...productData.colorArray[req.body.array_number], images: newImArr }
+    productData.colorArray[req.body.array_number] = newArr
+
+
+    const product = new Product({
+
+      title: productData.title,
+      category: productData.category,
+      brand: productData.brand,
+      description: productData.description,
+      modelNum: productData.modelNum,
+      published: productData.published,
+      colorArray: productData.colorArray,
+      _id: req.body.current_id,
+    });
+
+    try {
+      //save and resize pic
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+
+      await Product.findByIdAndUpdate(req.body.current_id, product, {});
+      let newProducts = await Product.findById(req.body.current_id);
+      res.status(200).json(newProducts)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
 
   }
 
@@ -556,7 +532,7 @@ exports.post_product1 = [
   body("modelNum")
     .trim()
     .escape(),
-    body("colorArray")
+  body("colorArray")
     .isArray(),
 
 
@@ -571,26 +547,26 @@ exports.post_product1 = [
       return;
     }
 
-    
-      const product = new Product({
-        title: req.body.title,
-        category: req.body.category,
-        brand: req.body.brand,
-        description: req.body.description,
-        modelNum: req.body.modelNum,
-        product_id: req.body.product_id,
-        colorArray: req.body.colorArray,
-        published: false
 
-      });
-      try {
-        await product.save()
-        let newProducts = await Product.findOne({product_id: req.body.product_id }).exec()
-        res.status(200).json(newProducts)
-      } catch (error) {
-        res.status(500).json({ message: error });
-      }
-    
+    const product = new Product({
+      title: req.body.title,
+      category: req.body.category,
+      brand: req.body.brand,
+      description: req.body.description,
+      modelNum: req.body.modelNum,
+      product_id: req.body.product_id,
+      colorArray: req.body.colorArray,
+      published: false
+
+    });
+    try {
+      await product.save()
+      let newProducts = await Product.findOne({ product_id: req.body.product_id }).exec()
+      res.status(200).json(newProducts)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
 
 
   }
@@ -599,7 +575,7 @@ exports.post_product1 = [
 
 
 // add product to product array
-
+/*
 exports.add_product = asyncHandler(async (req, res) => {
 
 
@@ -630,4 +606,4 @@ exports.add_product = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error });
   }
 
-})
+})*/
