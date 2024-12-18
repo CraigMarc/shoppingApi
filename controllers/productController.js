@@ -233,10 +233,31 @@ exports.all_products_get = asyncHandler(async (req, res) => {
 
 exports.delete_product = asyncHandler(async (req, res) => {
 
+  
   try {
     //find pic file
     let picProduct = await Product.findById(req.params.productId);
+   
+    for (let i=0; i<picProduct.colorArray.length; i++) {
+      if (picProduct.colorArray[i].images) {
+      for (let x=0; x<picProduct.colorArray[i].images.length; x++) {
+        let pic = picProduct.colorArray[i].images[x]
+        console.log(pic)
+        fs.unlink(pic, (err) => {
+          if (err) {
+            throw err;
+          }
+  
+          console.log("Delete File successful.");
+        });
+      }
+    }
 
+    }
+
+
+    
+    /*
     //delete pic file
     if (picProduct.image) {
       fs.unlink(picProduct.image, (err) => {
@@ -246,13 +267,14 @@ exports.delete_product = asyncHandler(async (req, res) => {
 
         console.log("Delete File successful.");
       });
-    }
+    }*/
 
     //delete product 
 
     await Product.findByIdAndDelete(req.params.productId);
     let allProducts = await Product.find().exec()
     res.status(200).json(allProducts)
+
   } catch (error) {
     res.status(500).json({ message: error });
   }
@@ -459,23 +481,6 @@ exports.new_image = [
   imageUploader.single('image'),
 
   async function (req, res) {
-
-/*
-    // path: where to store resized photo
-    let extArray = req.file.mimetype.split("/");
-    let extension = extArray[extArray.length - 1];
-    const path = `./uploads/image-${Date.now() + '.' + extension}`
-
-    try {
-      //save and resize pic
-      await sharp(req.file.buffer).resize(500, 375).toFile(path);
-
-      
-      res.status(200).json({image: path})
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }*/
-
       
       let productData = await Product.findById(req.body.current_id);
 
