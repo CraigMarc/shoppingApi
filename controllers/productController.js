@@ -363,7 +363,7 @@ exports.edit_product = asyncHandler(async (req, res) => {
 })
 
 // delete image
-
+/*
 exports.image_delete = asyncHandler(async (req, res) => {
 
   try {
@@ -379,17 +379,46 @@ exports.image_delete = asyncHandler(async (req, res) => {
 
         console.log("Delete File successful.");
       });
-    }
+    }*/
+
+      exports.image_delete = asyncHandler(async (req, res) => {
+console.log(req.body)
+        const product = new Product({
+          title: req.body.title,
+          category: req.body.category,
+          brand: req.body.brand,
+          description: req.body.description,
+          modelNum: req.body.modelNum,
+          product_id: req.body.product_id,
+          colorArray: req.body.colorArray,
+          _id: req.body._id,
+       
+        });
+
+        try {
+         
+          //delete pic file
+          
+            fs.unlink(req.body.picName, (err) => {
+              if (err) {
+                throw err;
+              }
+      
+              console.log("Delete File successful.");
+            })
+          
+
+    
 
     // update database
 
-    await Product.findByIdAndUpdate(req.params.productId, { $unset: { image: "" } });
-    let allProduct = await Product.find().exec()
-    res.status(200).json(allProduct)
+    await Product.findByIdAndUpdate(req.body._id, product, {});
+    let newProducts = await Product.findById(req.body._id);
+    res.status(200).json(newProducts)
 
   }
   catch (error) {
-    res.status(500).json({ message: error });
+    res.status(500).send(error);
   }
 
 

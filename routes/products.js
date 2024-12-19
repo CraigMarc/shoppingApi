@@ -24,7 +24,7 @@ router.put("/edit/:productId", product_controller.edit_product);
 
 //delete image
 
-router.delete("/image/:productId", product_controller.image_delete);
+router.delete("/image/", product_controller.image_delete);
 
 //add image file
 
