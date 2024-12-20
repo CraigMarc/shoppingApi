@@ -28,7 +28,7 @@ router.delete("/image/", product_controller.image_delete);
 
 //add image file
 
-router.post("/image/:productId", product_controller.image_post);
+//router.post("/image/", product_controller.image_post);
 
 // get all orders
 
@@ -54,6 +54,6 @@ router.post("/new_image/", product_controller.new_image);
 
 router.post("/new_product1/", product_controller.post_product1);
 
-// add product array
+// send updated product info
 
-//router.put("/product_array/", product_controller.add_product);
+router.post("/update_product/", product_controller.update_product);

@@ -363,52 +363,35 @@ exports.edit_product = asyncHandler(async (req, res) => {
 })
 
 // delete image
-/*
+
 exports.image_delete = asyncHandler(async (req, res) => {
+ 
+  const product = new Product({
+    title: req.body.title,
+    category: req.body.category,
+    brand: req.body.brand,
+    description: req.body.description,
+    modelNum: req.body.modelNum,
+    product_id: req.body.product_id,
+    colorArray: req.body.colorArray,
+    _id: req.body._id,
+
+  });
 
   try {
-    //find pic file
-    let picProduct = await Product.findById(req.params.productId);
 
     //delete pic file
-    if (picProduct.image) {
-      fs.unlink(picProduct.image, (err) => {
-        if (err) {
-          throw err;
-        }
 
-        console.log("Delete File successful.");
-      });
-    }*/
+    fs.unlink(req.body.picName, (err) => {
+      if (err) {
+        throw err;
+      }
 
-      exports.image_delete = asyncHandler(async (req, res) => {
-console.log(req.body)
-        const product = new Product({
-          title: req.body.title,
-          category: req.body.category,
-          brand: req.body.brand,
-          description: req.body.description,
-          modelNum: req.body.modelNum,
-          product_id: req.body.product_id,
-          colorArray: req.body.colorArray,
-          _id: req.body._id,
-       
-        });
+      console.log("Delete File successful.");
+    })
 
-        try {
-         
-          //delete pic file
-          
-            fs.unlink(req.body.picName, (err) => {
-              if (err) {
-                throw err;
-              }
-      
-              console.log("Delete File successful.");
-            })
-          
 
-    
+
 
     // update database
 
@@ -424,8 +407,8 @@ console.log(req.body)
 
 })
 
-// add picture to post
-
+// add new pic to edit
+/*
 exports.image_post = [
 
   // Handle single file upload with field name "image"
@@ -475,7 +458,70 @@ exports.image_post = [
   }
 
 
-]
+]*/
+/*
+exports.image_post = [
+
+  // Handle single file upload with field name "image"
+  //upload.single("image"),
+  imageUploader.single('image'),
+
+  async function (req, res) {
+    console.log(req.body)
+    console.log(req.file)
+
+    //let productData = await Product.findById(req.body.current_id);
+
+    // path: where to store resized photo
+    let extArray = req.file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+    let newColorArray = structuredClone(req.body.colorArray)
+
+    let newImArr = []
+    if (!newColorArray[req.body.colorIter].images) {
+      newImArr.push(path)
+
+    }
+    else {
+      newImArr = structuredClone(newColorArray[req.body.colorIter].images)
+      newImArr.push(path)
+
+    }
+    let newArr = { ...newColorArray[req.body.colorIter], images: newImArr }
+    newColorArray[req.body.colorIter] = newArr
+
+//console.log(newColorArray)
+/*
+    const product = new Product({
+
+      title: req.body.title,
+      category: req.body.category,
+      brand: req.body.brand,
+      description: req.body.description,
+      modelNum: req.body.modelNum,
+      published: req.body.published,
+      colorArray: req.body.colorArray,
+      product_id: req.body.product_id,
+      _id: req.body._id,
+    });
+
+    try {
+      //save and resize pic
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+
+      await Product.findByIdAndUpdate(req.body.current_id, product, {});
+      let newProducts = await Product.findById(req.body.current_id);
+      res.status(200).json(newProducts)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  }
+
+
+]*/
 
 // new image 
 
@@ -486,7 +532,7 @@ exports.new_image = [
   imageUploader.single('image'),
 
   async function (req, res) {
-
+  
     let productData = await Product.findById(req.body.current_id);
 
     // path: where to store resized photo
@@ -506,7 +552,7 @@ exports.new_image = [
     }
     let newArr = { ...productData.colorArray[req.body.array_number], images: newImArr }
     productData.colorArray[req.body.array_number] = newArr
-
+  
 
     const product = new Product({
 
@@ -522,9 +568,10 @@ exports.new_image = [
 
     try {
       //save and resize pic
+      
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
-
       await Product.findByIdAndUpdate(req.body.current_id, product, {});
+      
       let newProducts = await Product.findById(req.body.current_id);
       res.status(200).json(newProducts)
     } catch (error) {
@@ -602,37 +649,34 @@ exports.post_product1 = [
 
 ]
 
+// update product
 
-// add product to product array
-/*
-exports.add_product = asyncHandler(async (req, res) => {
-
-
-  let productData = await Product.findById(req.body.current_id);
-
-  const newData = [...productData.colorArray, req.body.color_array]
-  
-
+exports.update_product = asyncHandler(async (req, res) => {
+ 
   const product = new Product({
+    title: req.body.title,
+    category: req.body.category,
+    brand: req.body.brand,
+    description: req.body.description,
+    modelNum: req.body.modelNum,
+    product_id: req.body.product_id,
+    colorArray: req.body.colorArray,
+    _id: req.body._id,
 
-    title: productData.title,
-    category: productData.category,
-    brand: productData.brand,
-    description: productData.description,
-    modelNum: productData.modelNum,
-    published: productData.published,
-    colorArray: newData,
-    _id: req.body.current_id,
-   
   });
 
-
   try {
-    await Product.findByIdAndUpdate(req.body.current_id, product, {});
-    let newProducts = await Product.findById(req.body.current_id);
+
+    // update database
+
+    await Product.findByIdAndUpdate(req.body._id, product, {});
+    let newProducts = await Product.findById(req.body._id);
     res.status(200).json(newProducts)
-  } catch (error) {
-    res.status(500).json({ message: error });
+
+  }
+  catch (error) {
+    res.status(500).send(error);
   }
 
-})*/
+
+})
