@@ -57,3 +57,7 @@ router.post("/new_product1/", product_controller.post_product1);
 // send updated product info
 
 router.post("/update_product/", product_controller.update_product);
+
+//delete color array and pics
+
+router.delete("/delete_color/", product_controller.delete_color);

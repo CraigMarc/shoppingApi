@@ -407,121 +407,7 @@ exports.image_delete = asyncHandler(async (req, res) => {
 
 })
 
-// add new pic to edit
-/*
-exports.image_post = [
 
-  // Handle single file upload with field name "image"
-  //upload.single("image"),
-  imageUploader.single('image'),
-
-  async function (req, res) {
-
-
-    let productData = await Product.findById(req.params.productId);
-
-    // path: where to store resized photo
-    let extArray = req.file.mimetype.split("/");
-    let extension = extArray[extArray.length - 1];
-    const path = `./uploads/image-${Date.now() + '.' + extension}`
-
-
-    const product = new Product({
-
-      title: productData.title,
-      category: productData.category,
-      brand: productData.brand,
-      color: productData.color,
-      description: productData.description,
-      modelNum: productData.modelNum,
-      price: productData.price,
-      length: productData.length,
-      width: productData.width,
-      height: productData.height,
-      weight: productData.weight,
-      quantity: productData.quantity,
-      published: productData.published,
-      _id: req.params.productId,
-      image: path
-    });
-
-    try {
-      //save and resize pic
-      await sharp(req.file.buffer).resize(500, 375).toFile(path);
-
-      await Product.findByIdAndUpdate(req.params.productId, product, {});
-      let allProducts = await Product.find().exec()
-      res.status(200).json(allProducts)
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
-  }
-
-
-]*/
-/*
-exports.image_post = [
-
-  // Handle single file upload with field name "image"
-  //upload.single("image"),
-  imageUploader.single('image'),
-
-  async function (req, res) {
-    console.log(req.body)
-    console.log(req.file)
-
-    //let productData = await Product.findById(req.body.current_id);
-
-    // path: where to store resized photo
-    let extArray = req.file.mimetype.split("/");
-    let extension = extArray[extArray.length - 1];
-    const path = `./uploads/image-${Date.now() + '.' + extension}`
-
-    let newColorArray = structuredClone(req.body.colorArray)
-
-    let newImArr = []
-    if (!newColorArray[req.body.colorIter].images) {
-      newImArr.push(path)
-
-    }
-    else {
-      newImArr = structuredClone(newColorArray[req.body.colorIter].images)
-      newImArr.push(path)
-
-    }
-    let newArr = { ...newColorArray[req.body.colorIter], images: newImArr }
-    newColorArray[req.body.colorIter] = newArr
-
-//console.log(newColorArray)
-/*
-    const product = new Product({
-
-      title: req.body.title,
-      category: req.body.category,
-      brand: req.body.brand,
-      description: req.body.description,
-      modelNum: req.body.modelNum,
-      published: req.body.published,
-      colorArray: req.body.colorArray,
-      product_id: req.body.product_id,
-      _id: req.body._id,
-    });
-
-    try {
-      //save and resize pic
-      await sharp(req.file.buffer).resize(500, 375).toFile(path);
-
-      await Product.findByIdAndUpdate(req.body.current_id, product, {});
-      let newProducts = await Product.findById(req.body.current_id);
-      res.status(200).json(newProducts)
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
-
-  }
-
-
-]*/
 
 // new image 
 
@@ -661,6 +547,63 @@ exports.update_product = asyncHandler(async (req, res) => {
     modelNum: req.body.modelNum,
     product_id: req.body.product_id,
     colorArray: req.body.colorArray,
+    _id: req.body._id,
+
+  });
+
+  try {
+
+    // update database
+
+    await Product.findByIdAndUpdate(req.body._id, product, {});
+    let newProducts = await Product.findById(req.body._id);
+    res.status(200).json(newProducts)
+
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+
+
+})
+
+// delete color array and pics
+
+exports.delete_color = asyncHandler(async (req, res) => {
+
+
+  // delete pics from pic array
+  
+    if (req.body.colorArray[req.body.color_iter].images) {
+      for (let x = 0; x < req.body.colorArray[req.body.color_iter].images.length; x++) {
+        let pic = req.body.colorArray[req.body.color_iter].images[x]
+        
+        fs.unlink(pic, (err) => {
+          if (err) {
+            throw err;
+          }
+
+          console.log("Delete File successful.");
+        });
+      }
+    
+
+  }
+
+  // delete color array
+
+  let array2 = structuredClone(req.body.colorArray);
+
+ array2.splice(req.body.color_iter, 1)
+
+  const product = new Product({
+    title: req.body.title,
+    category: req.body.category,
+    brand: req.body.brand,
+    description: req.body.description,
+    modelNum: req.body.modelNum,
+    product_id: req.body.product_id,
+    colorArray: array2,
     _id: req.body._id,
 
   });
