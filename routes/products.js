@@ -5,7 +5,7 @@ const customer_controller = require("../controllers/customerController")
 
 // new product 
 
-router.post("/new/", product_controller.post_product);
+//router.post("/new/", product_controller.post_product);
 
 
 // delete product
@@ -20,7 +20,7 @@ module.exports = router;
 
 // edit post
 
-router.put("/edit/:productId", product_controller.edit_product);
+router.put("/edit/", product_controller.edit_product);
 
 //delete image
 

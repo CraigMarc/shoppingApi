@@ -59,160 +59,6 @@ imageUploader = multer({
   fileFilter: filter
 });
 
-// post new product
-
-exports.post_product = [
-
-  // Handle single file upload with field name "image"
-  // upload.single("image"),
-  imageUploader.single('image'),
-
-  body("title")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("title must be specified."),
-  body("category")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("category must be specified."),
-  body("brand")
-    .trim()
-    .escape(),
-  body("color")
-    .trim()
-    .escape(),
-  body("brand")
-    .trim()
-    .escape(),
-  body("description")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("description must be specified."),
-  body("modelNum")
-    .trim()
-    .escape(),
-  body("price")
-    .trim()
-    .isLength({ min: 1 })
-    .isNumeric()
-    .escape()
-    .withMessage("price must be specified."),
-  body("quantity")
-    .trim()
-    .isLength({ min: 1 })
-    .isNumeric()
-    .escape()
-    .withMessage("quantity must be specified."),
-  body("length")
-    .trim()
-    .isLength({ min: 1 })
-    .isNumeric()
-    .escape()
-    .withMessage("length must be specified."),
-  body("width")
-    .trim()
-    .isLength({ min: 1 })
-    .isNumeric()
-    .escape()
-    .withMessage("width must be specified."),
-  body("height")
-    .trim()
-    .isLength({ min: 1 })
-    .isNumeric()
-    .escape()
-    .withMessage("height must be specified."),
-  body("weight")
-    .trim()
-    .isLength({ min: 1 })
-    .isNumeric()
-    .escape()
-    .withMessage("weight must be specified."),
-
-
-  async function (req, res, next) {
-
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.json({
-        data: req.body,
-        errors: errors.array(),
-      });
-      return;
-    }
-
-
-    if (req.file) {
-
-      // path: where to store resized photo
-      let extArray = req.file.mimetype.split("/");
-      let extension = extArray[extArray.length - 1];
-      const path = `./uploads/image-${Date.now() + '.' + extension}`
-
-      const product = new Product({
-        title: req.body.title,
-        category: req.body.category,
-        brand: req.body.brand,
-        color: req.body.color,
-        description: req.body.description,
-        modelNum: req.body.modelNum,
-        price: req.body.price,
-        length: req.body.length,
-        width: req.body.width,
-        height: req.body.height,
-        weight: req.body.weight,
-        quantity: req.body.quantity,
-        published: false,
-        image: path
-      });
-      try {
-
-
-        await product.save()
-        let allProducts = await Product.find().exec()
-
-        //save and resize pic
-        await sharp(req.file.buffer).resize(500, 375).toFile(path);
-
-        res.status(200).json(allProducts)
-      } catch (error) {
-
-        res.status(500).json({ message: error });
-      }
-    }
-
-    else {
-      const product = new Product({
-        title: req.body.title,
-        category: req.body.category,
-        brand: req.body.brand,
-        color: req.body.color,
-        description: req.body.description,
-        modelNum: req.body.modelNum,
-        price: req.body.price,
-        length: req.body.length,
-        width: req.body.width,
-        height: req.body.height,
-        weight: req.body.weight,
-        quantity: req.body.quantity,
-        published: false
-
-      });
-      try {
-        await product.save()
-        let allProducts = await Product.find().exec()
-        res.status(200).json(allProducts)
-      } catch (error) {
-        res.status(500).json({ message: error });
-      }
-    }
-
-
-  }
-
-]
 
 // get all products
 
@@ -329,38 +175,30 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
 })
 
-// edit product
-
 exports.edit_product = asyncHandler(async (req, res) => {
 
   const product = new Product({
-
     title: req.body.title,
     category: req.body.category,
     brand: req.body.brand,
-    color: req.body.color,
     description: req.body.description,
     modelNum: req.body.modelNum,
-    price: req.body.price,
-    length: req.body.length,
-    width: req.body.width,
-    height: req.body.height,
-    weight: req.body.weight,
-    quantity: req.body.quantity,
-    published: req.body.published,
-    _id: req.params.productId
-
+    product_id: req.body.product_id,
+    colorArray: req.body.colorArray,
+    _id: req.body._id,
+   
   });
-
   try {
-    await Product.findByIdAndUpdate(req.params.productId, product, {});
-    let allProducts = await Product.find().exec()
-    res.status(200).json(allProducts)
+    await Product.findByIdAndUpdate(req.body._id, product, {});
+    let newProducts = await Product.findById(req.body._id);
+    res.status(200).json(newProducts)
   } catch (error) {
     res.status(500).json({ message: error });
   }
 
+  
 })
+
 
 // delete image
 
