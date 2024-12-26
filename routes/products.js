@@ -3,10 +3,6 @@ const router = express.Router();
 const product_controller = require("../controllers/productController")
 const customer_controller = require("../controllers/customerController")
 
-// new product 
-
-//router.post("/new/", product_controller.post_product);
-
 
 // delete product
 

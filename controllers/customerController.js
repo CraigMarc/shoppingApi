@@ -106,10 +106,10 @@ exports.post_newOrder = [
       let duplicate = await Order.findOne({ orderId: req.body.orderId });
 
       if (duplicate) {
-       
-       return res.json({ message: "duplicate order" })
+
+        return res.json({ message: "duplicate order" })
       }
-      
+
       if (!duplicate) {
         await order.save()
       }
@@ -119,33 +119,30 @@ exports.post_newOrder = [
         // find products
         let productFind = await Product.findById(req.body.productsArray[i].id);
 
-        let newQuantity = productFind.quantity - req.body.productsArray[i].quantity
+        let newQuantity = productFind.colorArray[req.body.productsArray[i].colorIter].sizeArray[req.body.productsArray[i].sizeIter].quantity - req.body.productsArray[i].quantity
+        productFind.colorArray[req.body.productsArray[i].colorIter].sizeArray[req.body.productsArray[i].sizeIter].quantity = newQuantity
 
         const product = new Product({
 
           title: req.body.productsArray[i].title,
           category: req.body.productsArray[i].category,
           brand: req.body.productsArray[i].brand,
-          color: req.body.productsArray[i].color,
           description: req.body.productsArray[i].description,
           modelNum: req.body.productsArray[i].modelNum,
-          price: req.body.productsArray[i].price,
-          length: req.body.productsArray[i].length,
-          width: req.body.productsArray[i].width,
-          height: req.body.productsArray[i].height,
-          weight: req.body.productsArray[i].weight,
-          quantity: newQuantity,
           published: req.body.productsArray[i].published,
+          colorArray: productFind.colorArray,
+          published: false,
           _id: req.body.productsArray[i].id
 
         });
-
-        await Product.findByIdAndUpdate(req.body.productsArray[i].id, product, {});
-
+        
+                await Product.findByIdAndUpdate(req.body.productsArray[i].id, product, {});
+        
       }
-
-      let allOrders = await Order.find().exec()
-      res.status(200).json(allOrders)
+      
+            let allOrders = await Order.find().exec()
+            res.status(200).json(allOrders)
+            
     } catch (error) {
       res.status(500).json({ message: error });
     }
@@ -188,7 +185,7 @@ exports.shipped = asyncHandler(async (req, res) => {
 
     try {
 
-  
+
       await Order.findByIdAndUpdate(req.params.orderId, order, {});
       let allOrders = await Order.find().exec()
       res.status(200).json(allOrders)
@@ -197,7 +194,7 @@ exports.shipped = asyncHandler(async (req, res) => {
     }
   }
 
-  if (orderData.shipped == false  && !duplicate) {
+  if (orderData.shipped == false && !duplicate) {
 
     const order = new Order({
       firstName: orderData.firstName,
@@ -299,35 +296,35 @@ exports.post_email = asyncHandler(async (req, res) => {
 
   if (!duplicate) {
 
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'cmar1455cr@gmail.com',
-      pass: process.env.EMAIL_PASSWORD
-    }
-  });
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'cmar1455cr@gmail.com',
+        pass: process.env.EMAIL_PASSWORD
+      }
+    });
 
-  const mailOptions = {
-    from: 'This Store <cmar1455cr@gmail.com>',
-    to: req.body.email,
-    subject: 'Your recent order',
-    text: req.body.order_details
-  };
+    const mailOptions = {
+      from: 'This Store <cmar1455cr@gmail.com>',
+      to: req.body.email,
+      subject: 'Your recent order',
+      text: req.body.order_details
+    };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      console.log(error);
-      res.send(error)
-    } else {
-      console.log('Email sent: ' + info.response);
-      res.json({Email: "sent"  + info.response})
-    }
-  });
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        res.send(error)
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.json({ Email: "sent" + info.response })
+      }
+    });
 
   }
-  
+
   else {
-    res.json({Email: "not sent duplicate"})
+    res.json({ Email: "not sent duplicate" })
   }
 
 
