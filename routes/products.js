@@ -57,3 +57,11 @@ router.post("/update_product/", product_controller.update_product);
 //delete color array and pics
 
 router.delete("/delete_color/", product_controller.delete_color);
+
+// add category
+
+router.post("/new_category/", product_controller.new_category);
+
+// get all categories
+
+router.post("/category/", product_controller.all_categories_get);

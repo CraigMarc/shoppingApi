@@ -271,3 +271,20 @@ Content-Type: application/json
        "email": "cmarcinkiewicz2000@yahoo.com"
 
     }
+
+### new category
+POST http://localhost:3000/products/new_category HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImNtYXJAeWFob28uY29tIiwiaWF0IjoxNzM1NjAwOTA4LCJleHAiOjE3MzU2MDI5MDh9.uFENERp4h7mqHV-RHSrfKUY_-4FpeYKwQxk-MUhy100
+Content-Type: multipart/form-data; boundary=MfnBoundry
+
+--MfnBoundry
+Content-Disposition: form-data; name="name"
+
+camp
+
+--MfnBoundry
+Content-Disposition: form-data; name="image"; filename="./me.JPG" 
+Content-Type: image/jpeg
+
+< ./me.JPG 
+--MfnBoundry--

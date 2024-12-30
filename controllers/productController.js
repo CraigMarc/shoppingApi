@@ -3,6 +3,7 @@ const multer = require("multer"); // For uploading images
 const { body, validationResult } = require("express-validator")
 const mongoose = require("mongoose");
 const Product = require("../models/inventory");
+const Category = require("../models/category");
 const fs = require('fs');
 const sharp = require('sharp');
 
@@ -186,7 +187,7 @@ exports.edit_product = asyncHandler(async (req, res) => {
     product_id: req.body.product_id,
     colorArray: req.body.colorArray,
     _id: req.body._id,
-   
+
   });
   try {
     await Product.findByIdAndUpdate(req.body._id, product, {});
@@ -196,14 +197,14 @@ exports.edit_product = asyncHandler(async (req, res) => {
     res.status(500).json({ message: error });
   }
 
-  
+
 })
 
 
 // delete image
 
 exports.image_delete = asyncHandler(async (req, res) => {
- 
+
   const product = new Product({
     title: req.body.title,
     category: req.body.category,
@@ -256,7 +257,7 @@ exports.new_image = [
   imageUploader.single('image'),
 
   async function (req, res) {
-  
+
     let productData = await Product.findById(req.body.current_id);
 
     // path: where to store resized photo
@@ -276,7 +277,7 @@ exports.new_image = [
     }
     let newArr = { ...productData.colorArray[req.body.array_number], images: newImArr }
     productData.colorArray[req.body.array_number] = newArr
-  
+
 
     const product = new Product({
 
@@ -292,10 +293,10 @@ exports.new_image = [
 
     try {
       //save and resize pic
-      
+
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
       await Product.findByIdAndUpdate(req.body.current_id, product, {});
-      
+
       let newProducts = await Product.findById(req.body.current_id);
       res.status(200).json(newProducts)
     } catch (error) {
@@ -376,7 +377,7 @@ exports.post_product1 = [
 // update product
 
 exports.update_product = asyncHandler(async (req, res) => {
- 
+
   const product = new Product({
     title: req.body.title,
     category: req.body.category,
@@ -411,20 +412,20 @@ exports.delete_color = asyncHandler(async (req, res) => {
 
 
   // delete pics from pic array
-  
-    if (req.body.colorArray[req.body.color_iter].images) {
-      for (let x = 0; x < req.body.colorArray[req.body.color_iter].images.length; x++) {
-        let pic = req.body.colorArray[req.body.color_iter].images[x]
-        
-        fs.unlink(pic, (err) => {
-          if (err) {
-            throw err;
-          }
 
-          console.log("Delete File successful.");
-        });
-      }
-    
+  if (req.body.colorArray[req.body.color_iter].images) {
+    for (let x = 0; x < req.body.colorArray[req.body.color_iter].images.length; x++) {
+      let pic = req.body.colorArray[req.body.color_iter].images[x]
+
+      fs.unlink(pic, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log("Delete File successful.");
+      });
+    }
+
 
   }
 
@@ -432,7 +433,7 @@ exports.delete_color = asyncHandler(async (req, res) => {
 
   let array2 = structuredClone(req.body.colorArray);
 
- array2.splice(req.body.color_iter, 1)
+  array2.splice(req.body.color_iter, 1)
 
   const product = new Product({
     title: req.body.title,
@@ -461,3 +462,82 @@ exports.delete_color = asyncHandler(async (req, res) => {
 
 
 })
+
+// new category
+
+exports.new_category = [
+
+  // Handle single file upload with field name "image"
+  imageUploader.single('image'),
+
+  body("name").trim().escape(),
+
+
+  async function (req, res, next) {
+   
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json({
+        data: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+
+    if (req.file) {
+
+      // path: where to store resized photo
+      let extArray = req.file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+
+      const category = new Category({
+        name: req.body.name,
+        image: path
+      });
+      try {
+        //save and resize pic
+
+        await sharp(req.file.buffer).resize(500, 375).toFile(path);
+        await category.save()
+        let allCategories = await Category.find().exec()
+        res.status(200).json(allCategories)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+    }
+    else {
+      const category = new Category({
+        name: req.body.name,
+
+
+      });
+      try {
+        await category.save()
+        let allCategories = await Category.find().exec()
+        res.status(200).json(allCategories)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+    }
+
+
+  }
+
+]
+
+// get all categories
+
+exports.all_categories_get = asyncHandler(async (req, res) => {
+
+
+  try {
+    let allCategories = await Category.find().exec()
+    res.status(200).json(allCategories)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
