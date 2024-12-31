@@ -634,3 +634,45 @@ exports.new_brand = [
   }
 
 ]
+
+// delete brand
+
+exports.delete_brand = asyncHandler(async (req, res) => {
+
+
+  let brandData = await Brand.findById(req.params._id);
+
+
+  // delete pic
+  fs.unlink(brandData.image, (err) => {
+    if (err) {
+      throw err;
+    }
+
+    console.log("Delete File successful.");
+  });
+
+  try {
+    await Brand.findByIdAndDelete(req.params._id);
+    let allBrands = await Brand.find().exec()
+    res.status(200).json(allBrands)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
+
+// get all brands
+
+exports.all_brands_get = asyncHandler(async (req, res) => {
+
+
+  try {
+    let allBrands = await Brand.find().exec()
+    res.status(200).json(allBrands)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
+
