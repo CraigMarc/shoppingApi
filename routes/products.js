@@ -64,4 +64,8 @@ router.post("/new_category/", product_controller.new_category);
 
 // get all categories
 
-router.post("/category/", product_controller.all_categories_get);
+router.get("/category/", product_controller.all_categories_get); 
+
+// delete category
+
+router.delete("/delete_category/:_id", product_controller.delete_category);

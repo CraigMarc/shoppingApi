@@ -474,7 +474,7 @@ exports.new_category = [
 
 
   async function (req, res, next) {
-   
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.json({
@@ -534,6 +534,33 @@ exports.all_categories_get = asyncHandler(async (req, res) => {
 
 
   try {
+    let allCategories = await Category.find().exec()
+    res.status(200).json(allCategories)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+});
+
+// delete category
+
+exports.delete_category = asyncHandler(async (req, res) => {
+
+
+  let categoryData = await Category.findById(req.params._id);
+
+
+  // delete pic
+  fs.unlink(categoryData.image, (err) => {
+    if (err) {
+      throw err;
+    }
+
+    console.log("Delete File successful.");
+  });
+
+  try {
+    await Category.findByIdAndDelete(req.params._id);
     let allCategories = await Category.find().exec()
     res.status(200).json(allCategories)
   } catch (error) {
