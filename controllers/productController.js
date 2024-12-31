@@ -67,7 +67,7 @@ exports.all_products_get = asyncHandler(async (req, res) => {
 
 
   try {
-    let allProducts = await Product.find().exec()
+    let allProducts = await Product.find().populate("category").exec()
     res.status(200).json(allProducts)
   } catch (error) {
     res.status(500).json({ message: error });
