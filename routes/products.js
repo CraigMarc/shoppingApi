@@ -69,3 +69,7 @@ router.get("/category/", product_controller.all_categories_get);
 // delete category
 
 router.delete("/delete_category/:_id", product_controller.delete_category);
+
+// new brand
+
+router.post("/new_brand/", product_controller.new_brand);

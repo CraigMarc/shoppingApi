@@ -4,6 +4,7 @@ const { body, validationResult } = require("express-validator")
 const mongoose = require("mongoose");
 const Product = require("../models/inventory");
 const Category = require("../models/category");
+const Brand = require("../models/brand");
 const fs = require('fs');
 const sharp = require('sharp');
 
@@ -568,3 +569,68 @@ exports.delete_category = asyncHandler(async (req, res) => {
   }
 
 });
+
+// new brand
+
+exports.new_brand = [
+
+  // Handle single file upload with field name "image"
+  imageUploader.single('image'),
+
+  body("name").trim().escape(),
+
+
+  async function (req, res, next) {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json({
+        data: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+
+    if (req.file) {
+
+      // path: where to store resized photo
+      let extArray = req.file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+
+      const brand = new Brand({
+        name: req.body.name,
+        image: path
+      });
+      try {
+        //save and resize pic
+
+        await sharp(req.file.buffer).resize(500, 375).toFile(path);
+        await brand.save()
+        let allBrands = await Brand.find().exec()
+        res.status(200).json(allBrands)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+    }
+    else {
+      const brand = new Brand({
+        name: req.body.name,
+
+
+      });
+      try {
+        await brand.save()
+        let allBrands = await Brand.find().exec()
+        res.status(200).json(allBrands)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+    }
+
+
+  }
+
+]
