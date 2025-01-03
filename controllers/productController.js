@@ -142,7 +142,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
     try {
       await Product.findByIdAndUpdate(req.params.productId, product, {});
-      let allProducts = await Product.find().exec()
+      let allProducts = await Product.find().populate("category").populate("brand").exec()
       res.status(200).json(allProducts)
     } catch (error) {
       res.status(500).json({ message: error });
@@ -167,7 +167,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
     try {
       await Product.findByIdAndUpdate(req.params.productId, product, {});
-      let allProducts = await Product.find().exec()
+      let allProducts = await Product.find().populate("category").populate("brand").exec()
       res.status(200).json(allProducts)
     } catch (error) {
       res.status(500).json({ message: error });
@@ -556,6 +556,8 @@ exports.delete_category = asyncHandler(async (req, res) => {
   }
 
   else {
+
+    if (categoryData.image) {
     // delete pic
     fs.unlink(categoryData.image, (err) => {
       if (err) {
@@ -564,6 +566,8 @@ exports.delete_category = asyncHandler(async (req, res) => {
 
       console.log("Delete File successful.");
     });
+
+  }
 
     try {
       await Category.findByIdAndDelete(req.params._id);
@@ -653,6 +657,8 @@ exports.delete_brand = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "category in use" })
   }
   else {
+
+    if (brandData.image) {
     // delete pic
     fs.unlink(brandData.image, (err) => {
       if (err) {
@@ -661,6 +667,7 @@ exports.delete_brand = asyncHandler(async (req, res) => {
 
       console.log("Delete File successful.");
     });
+  }
 
     try {
       await Brand.findByIdAndDelete(req.params._id);
