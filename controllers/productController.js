@@ -107,7 +107,7 @@ exports.delete_product = asyncHandler(async (req, res) => {
     //delete product 
 
     await Product.findByIdAndDelete(req.params.productId);
-    let allProducts = await Product.find().exec()
+    let allProducts = await Product.find().populate("category").populate("brand").exec()
     res.status(200).json(allProducts)
 
   } catch (error) {
@@ -549,8 +549,13 @@ exports.delete_category = asyncHandler(async (req, res) => {
 
 
   let categoryData = await Category.findById(req.params._id);
+  let productCategory = await Product.find({category: req.params._id});
+  
+  if (productCategory.length > 0) {
+    res.status(200).json({message: "category in use"})
+  }
 
-
+else {
   // delete pic
   fs.unlink(categoryData.image, (err) => {
     if (err) {
@@ -567,6 +572,7 @@ exports.delete_category = asyncHandler(async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error });
   }
+}
 
 });
 
