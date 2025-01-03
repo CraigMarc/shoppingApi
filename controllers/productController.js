@@ -549,30 +549,30 @@ exports.delete_category = asyncHandler(async (req, res) => {
 
 
   let categoryData = await Category.findById(req.params._id);
-  let productCategory = await Product.find({category: req.params._id});
-  
+  let productCategory = await Product.find({ category: req.params._id });
+
   if (productCategory.length > 0) {
-    res.status(200).json({message: "category in use"})
+    res.status(200).json({ message: "category in use" })
   }
 
-else {
-  // delete pic
-  fs.unlink(categoryData.image, (err) => {
-    if (err) {
-      throw err;
+  else {
+    // delete pic
+    fs.unlink(categoryData.image, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      console.log("Delete File successful.");
+    });
+
+    try {
+      await Category.findByIdAndDelete(req.params._id);
+      let allCategories = await Category.find().exec()
+      res.status(200).json(allCategories)
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
-
-    console.log("Delete File successful.");
-  });
-
-  try {
-    await Category.findByIdAndDelete(req.params._id);
-    let allCategories = await Category.find().exec()
-    res.status(200).json(allCategories)
-  } catch (error) {
-    res.status(500).json({ message: error });
   }
-}
 
 });
 
@@ -647,25 +647,30 @@ exports.delete_brand = asyncHandler(async (req, res) => {
 
 
   let brandData = await Brand.findById(req.params._id);
+  let productBrand = await Product.find({ brand: req.params._id });
 
+  if (productBrand.length > 0) {
+    res.status(200).json({ message: "category in use" })
+  }
+  else {
+    // delete pic
+    fs.unlink(brandData.image, (err) => {
+      if (err) {
+        throw err;
+      }
 
-  // delete pic
-  fs.unlink(brandData.image, (err) => {
-    if (err) {
-      throw err;
+      console.log("Delete File successful.");
+    });
+
+    try {
+      await Brand.findByIdAndDelete(req.params._id);
+      let allBrands = await Brand.find().exec()
+      res.status(200).json(allBrands)
+    } catch (error) {
+      res.status(500).json({ message: error });
     }
 
-    console.log("Delete File successful.");
-  });
-
-  try {
-    await Brand.findByIdAndDelete(req.params._id);
-    let allBrands = await Brand.find().exec()
-    res.status(200).json(allBrands)
-  } catch (error) {
-    res.status(500).json({ message: error });
   }
-
 });
 
 // get all brands
