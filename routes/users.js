@@ -43,4 +43,12 @@ router.post("/email/", customer_controller.post_email);
 
 router.get("/all/", product_controller.all_products_get);
 
+// get all brands
+
+router.get("/brand/", product_controller.all_brands_get);
+
+// get all categories
+
+router.get("/category/", product_controller.all_categories_get);
+
 
