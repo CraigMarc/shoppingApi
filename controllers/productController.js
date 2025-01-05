@@ -135,6 +135,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
       description: productData.description,
       modelNum: productData.modelNum,
       published: productData.published,
+      sale_percent: productData.sale_percent,
       colorArray: productData.colorArray,
       published: false,
       _id: req.params.productId
@@ -159,6 +160,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
       description: productData.description,
       modelNum: productData.modelNum,
       published: productData.published,
+      sale_percent: productData.sale_percent,
       colorArray: productData.colorArray,
       published: true,
       _id: req.params.productId
@@ -185,6 +187,7 @@ exports.edit_product = asyncHandler(async (req, res) => {
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
+    sale_percent: req.body.sale_percent,
     product_id: req.body.product_id,
     colorArray: req.body.colorArray,
     _id: req.body._id,
@@ -212,6 +215,7 @@ exports.image_delete = asyncHandler(async (req, res) => {
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
+    sale_percent: req.body.sale_percent,
     product_id: req.body.product_id,
     colorArray: req.body.colorArray,
     _id: req.body._id,
@@ -287,6 +291,7 @@ exports.new_image = [
       brand: productData.brand,
       description: productData.description,
       modelNum: productData.modelNum,
+      sale_percent: productData.sale_percent,
       published: productData.published,
       colorArray: productData.colorArray,
       _id: req.body.current_id,
@@ -334,6 +339,9 @@ exports.post_product1 = [
   body("modelNum")
     .trim()
     .escape(),
+  body("sale_percent")
+    .trim()
+    .escape(),
   body("colorArray")
     .isArray(),
 
@@ -356,6 +364,7 @@ exports.post_product1 = [
       brand: req.body.brand,
       description: req.body.description,
       modelNum: req.body.modelNum,
+      sale_percent: req.body.sale_percent,
       product_id: req.body.product_id,
       colorArray: req.body.colorArray,
       published: false
@@ -385,6 +394,7 @@ exports.update_product = asyncHandler(async (req, res) => {
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
+    sale_percent: req.body.sale_percent,
     product_id: req.body.product_id,
     colorArray: req.body.colorArray,
     _id: req.body._id,
@@ -442,6 +452,7 @@ exports.delete_color = asyncHandler(async (req, res) => {
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
+    sale_percent: req.body.sale_percent,
     product_id: req.body.product_id,
     colorArray: array2,
     _id: req.body._id,
@@ -558,16 +569,16 @@ exports.delete_category = asyncHandler(async (req, res) => {
   else {
 
     if (categoryData.image) {
-    // delete pic
-    fs.unlink(categoryData.image, (err) => {
-      if (err) {
-        throw err;
-      }
+      // delete pic
+      fs.unlink(categoryData.image, (err) => {
+        if (err) {
+          throw err;
+        }
 
-      console.log("Delete File successful.");
-    });
+        console.log("Delete File successful.");
+      });
 
-  }
+    }
 
     try {
       await Category.findByIdAndDelete(req.params._id);
@@ -659,15 +670,15 @@ exports.delete_brand = asyncHandler(async (req, res) => {
   else {
 
     if (brandData.image) {
-    // delete pic
-    fs.unlink(brandData.image, (err) => {
-      if (err) {
-        throw err;
-      }
+      // delete pic
+      fs.unlink(brandData.image, (err) => {
+        if (err) {
+          throw err;
+        }
 
-      console.log("Delete File successful.");
-    });
-  }
+        console.log("Delete File successful.");
+      });
+    }
 
     try {
       await Brand.findByIdAndDelete(req.params._id);

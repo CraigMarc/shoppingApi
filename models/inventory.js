@@ -9,6 +9,7 @@ const ProductSchema = new Schema({
   description: { type: String, required: true, minLength: 1 },
   modelNum: { type: String, minLength: 1 },
   product_id: { type: String, minLength: 1 },
+  sale_percent: { type: Number, minLength: 1, default: 0 },
   colorArray: { type: [] }, 
   published: { type: Boolean },
    
