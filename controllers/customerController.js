@@ -129,6 +129,7 @@ exports.post_newOrder = [
           brand: req.body.productsArray[i].brand,
           description: req.body.productsArray[i].description,
           modelNum: req.body.productsArray[i].modelNum,
+          sale_percent: req.body.productsArray[i].sale_percent,
           published: req.body.productsArray[i].published,
           colorArray: productFind.colorArray,
           published: false,
