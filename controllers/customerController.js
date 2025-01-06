@@ -147,32 +147,15 @@ exports.shipped = asyncHandler(async (req, res) => {
 
   let orderData = await Order.findById({ _id: req.params.orderId });
 
+  
 
-  if (orderData.shipped == true && !duplicate) {
+  if (orderData.shipped == true) {
 
-    const order = new Order({
-
-      firstName: orderData.firstName,
-      lastName: orderData.lastName,
-      address1: orderData.address1,
-      address2: orderData.address2,
-      email: orderData.email,
-      town: orderData.town,
-      state: orderData.state,
-      zip: orderData.zip,
-      shippingCost: orderData.shippingCost,
-      orderCost: orderData.orderCost,
-      productsArray: orderData.productsArray,
-      quantity: orderData.quantity,
-      shipped: false,
-      _id: req.params.orderId
-
-    });
 
     try {
 
 
-      await Order.findByIdAndUpdate(req.params.orderId, order, {});
+      await Order.findByIdAndUpdate(req.params.orderId, {shipped: false});
       let allOrders = await Order.find().exec()
       res.status(200).json(allOrders)
     } catch (error) {
@@ -180,28 +163,11 @@ exports.shipped = asyncHandler(async (req, res) => {
     }
   }
 
-  if (orderData.shipped == false && !duplicate) {
+  if (orderData.shipped == false) {
 
-    const order = new Order({
-      firstName: orderData.firstName,
-      lastName: orderData.lastName,
-      address1: orderData.address1,
-      address2: orderData.address2,
-      email: orderData.email,
-      town: orderData.town,
-      state: orderData.state,
-      zip: orderData.zip,
-      shippingCost: orderData.shippingCost,
-      orderCost: orderData.orderCost,
-      productsArray: orderData.productsArray,
-      quantity: orderData.quantity,
-      shipped: true,
-      _id: req.params.orderId
-
-    });
 
     try {
-      await Order.findByIdAndUpdate(req.params.orderId, order, {});
+      await Order.findByIdAndUpdate(req.params.orderId, {shipped: true});
       let allOrders = await Order.find().exec()
       res.status(200).json(allOrders)
     } catch (error) {
