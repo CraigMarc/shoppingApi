@@ -55,4 +55,10 @@ router.get("/category/", product_controller.all_categories_get);
 
 router.post("/contact/", customer_controller.post_contact);
 
+// check order status
+
+router.post("/order_status/", customer_controller.order_status);
+
+
+
 

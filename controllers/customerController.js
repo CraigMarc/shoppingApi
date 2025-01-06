@@ -321,8 +321,6 @@ exports.post_email = asyncHandler(async (req, res) => {
 
 exports.post_contact = asyncHandler(async (req, res) => {
 
-  console.log(req.body)
-
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -348,6 +346,19 @@ exports.post_contact = asyncHandler(async (req, res) => {
       }
     });
 
+
+});
+
+// check order status
+
+exports.order_status = asyncHandler(async (req, res) => {
+
+  try {
+    let allOrders = await Order.find({email: req.body.email}).exec()
+    res.status(200).json(allOrders)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 
 });
 
