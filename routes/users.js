@@ -51,4 +51,8 @@ router.get("/brand/", product_controller.all_brands_get);
 
 router.get("/category/", product_controller.all_categories_get);
 
+// send contact email
+
+router.post("/contact/", customer_controller.post_contact);
+
 

@@ -315,3 +315,39 @@ exports.post_email = asyncHandler(async (req, res) => {
 
 
 });
+
+
+// send contact email
+
+exports.post_contact = asyncHandler(async (req, res) => {
+
+  console.log(req.body)
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'cmar1455cr@gmail.com',
+        pass: process.env.EMAIL_PASSWORD
+      }
+    });
+
+    const mailOptions = {
+      from: 'This Store <cmar1455cr@gmail.com>',
+      to: 'cmarcinkiewicz2000@yahoo.com',
+      subject: req.body.subject,
+      text: req.body.message
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+        res.send(error)
+      } else {
+        console.log('Email sent: ' + info.response);
+        res.json({ Email: "sent"  })
+      }
+    });
+
+
+});
+
