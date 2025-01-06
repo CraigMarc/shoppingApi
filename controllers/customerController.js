@@ -122,28 +122,13 @@ exports.post_newOrder = [
         let newQuantity = productFind.colorArray[req.body.productsArray[i].colorIter].sizeArray[req.body.productsArray[i].sizeIter].quantity - req.body.productsArray[i].quantity
         productFind.colorArray[req.body.productsArray[i].colorIter].sizeArray[req.body.productsArray[i].sizeIter].quantity = newQuantity
 
-        const product = new Product({
+        await Product.findByIdAndUpdate(req.body.productsArray[i].id, { colorArray: productFind.colorArray });
 
-          title: req.body.productsArray[i].title,
-          category: req.body.productsArray[i].category,
-          brand: req.body.productsArray[i].brand,
-          description: req.body.productsArray[i].description,
-          modelNum: req.body.productsArray[i].modelNum,
-          sale_percent: req.body.productsArray[i].sale_percent,
-          published: req.body.productsArray[i].published,
-          colorArray: productFind.colorArray,
-          published: false,
-          _id: req.body.productsArray[i].id
-
-        });
-        
-                await Product.findByIdAndUpdate(req.body.productsArray[i].id, product, {});
-        
       }
-      
-            let allOrders = await Order.find().exec()
-            res.status(200).json(allOrders)
-            
+
+      //let allOrders = await Order.find().exec()
+      res.status(200).json({ message: "product updated" })
+
     } catch (error) {
       res.status(500).json({ message: error });
     }
