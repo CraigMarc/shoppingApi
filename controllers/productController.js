@@ -127,23 +127,9 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
   if (productData.published == true) {
 
-    const product = new Product({
-
-      title: productData.title,
-      category: productData.category,
-      subCategory: productData.subCategory,
-      brand: productData.brand,
-      description: productData.description,
-      modelNum: productData.modelNum,
-      published: productData.published,
-      sale_percent: productData.sale_percent,
-      colorArray: productData.colorArray,
-      published: false,
-      _id: req.params.productId
-    });
 
     try {
-      await Product.findByIdAndUpdate(req.params.productId, product, {});
+      await Product.findByIdAndUpdate(req.params.productId, {published: false});
       let allProducts = await Product.find().populate("category").populate("brand").exec()
       res.status(200).json(allProducts)
     } catch (error) {
@@ -153,24 +139,9 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
   if (productData.published == false) {
 
-    const product = new Product({
-
-      title: productData.title,
-      category: productData.category,
-      subCategory: productData.subCategory,
-      brand: productData.brand,
-      description: productData.description,
-      modelNum: productData.modelNum,
-      published: productData.published,
-      sale_percent: productData.sale_percent,
-      colorArray: productData.colorArray,
-      published: true,
-      _id: req.params.productId
-
-    });
 
     try {
-      await Product.findByIdAndUpdate(req.params.productId, product, {});
+      await Product.findByIdAndUpdate(req.params.productId, {published: true});
       let allProducts = await Product.find().populate("category").populate("brand").exec()
       res.status(200).json(allProducts)
     } catch (error) {
@@ -287,7 +258,7 @@ exports.new_image = [
     let newArr = { ...productData.colorArray[req.body.array_number], images: newImArr }
     productData.colorArray[req.body.array_number] = newArr
 
-
+/*
     const product = new Product({
 
       title: productData.title,
@@ -300,13 +271,13 @@ exports.new_image = [
       published: productData.published,
       colorArray: productData.colorArray,
       _id: req.body.current_id,
-    });
+    });*/
 
     try {
       //save and resize pic
 
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      await Product.findByIdAndUpdate(req.body.current_id, product, {});
+      await Product.findByIdAndUpdate(req.body.current_id, {colorArray: productData.colorArray});
 
       let newProducts = await Product.findById(req.body.current_id);
       res.status(200).json(newProducts)
