@@ -131,6 +131,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
       title: productData.title,
       category: productData.category,
+      subCategory: productData.subCategory,
       brand: productData.brand,
       description: productData.description,
       modelNum: productData.modelNum,
@@ -156,6 +157,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
       title: productData.title,
       category: productData.category,
+      subCategory: productData.subCategory,
       brand: productData.brand,
       description: productData.description,
       modelNum: productData.modelNum,
@@ -184,6 +186,7 @@ exports.edit_product = asyncHandler(async (req, res) => {
   const product = new Product({
     title: req.body.title,
     category: req.body.category,
+    subCategory: req.body.subCategory,
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
@@ -212,6 +215,7 @@ exports.image_delete = asyncHandler(async (req, res) => {
   const product = new Product({
     title: req.body.title,
     category: req.body.category,
+    subCategory: req.body.subCategory,
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
@@ -288,6 +292,7 @@ exports.new_image = [
 
       title: productData.title,
       category: productData.category,
+      subCategory: productData.subCategory,
       brand: productData.brand,
       description: productData.description,
       modelNum: productData.modelNum,
@@ -344,6 +349,11 @@ exports.post_product1 = [
     .escape(),
   body("colorArray")
     .isArray(),
+  body("subCategory")
+    .trim()
+    .isLength({ min: 1 })
+    .escape()
+    .withMessage("description must be specified."),
 
 
   async function (req, res, next) {
@@ -361,6 +371,7 @@ exports.post_product1 = [
     const product = new Product({
       title: req.body.title,
       category: req.body.category,
+      subCategory: req.body.subCategory,
       brand: req.body.brand,
       description: req.body.description,
       modelNum: req.body.modelNum,
@@ -391,6 +402,7 @@ exports.update_product = asyncHandler(async (req, res) => {
   const product = new Product({
     title: req.body.title,
     category: req.body.category,
+    subCategory: req.body.subCategory,
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
@@ -449,6 +461,7 @@ exports.delete_color = asyncHandler(async (req, res) => {
   const product = new Product({
     title: req.body.title,
     category: req.body.category,
+    subCategory: req.body.subCategory,
     brand: req.body.brand,
     description: req.body.description,
     modelNum: req.body.modelNum,
@@ -776,10 +789,12 @@ exports.new_subcategory = [
 
 exports.delete_subcategory = asyncHandler(async (req, res) => {
 
+
+
   let categoryData = await Category.findById(req.body._id);
   let productSubCategory = await Product.find({ subCategory: req.body.subName });
 
-  
+
   if (productSubCategory.length > 0) {
     res.status(200).json({ message: "category in use" })
   }
@@ -798,13 +813,14 @@ exports.delete_subcategory = asyncHandler(async (req, res) => {
 
     }
 
+
     try {
-      
-      
+
+
       categoryData.subCategory.splice(req.body.iter, 1)
-      
+
       await Category.findByIdAndUpdate(req.body._id, { subCategory: categoryData.subCategory });
-     
+
       let allCategories = await Category.find().exec()
       res.status(200).json(allCategories)
     } catch (error) {
