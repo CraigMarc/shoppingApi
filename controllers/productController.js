@@ -484,7 +484,6 @@ exports.new_category = [
 
   body("name").trim().escape(),
 
-
   async function (req, res, next) {
 
     const errors = validationResult(req);
@@ -705,3 +704,69 @@ exports.all_brands_get = asyncHandler(async (req, res) => {
 
 });
 
+// new subcategory
+
+exports.new_subcategory = [
+
+  // Handle single file upload with field name "image"
+  imageUploader.single('image'),
+
+  body("name").trim().escape(),
+
+  async function (req, res, next) {
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.json({
+        data: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    if (req.file) {
+
+      // path: where to store resized photo
+      let extArray = req.file.mimetype.split("/");
+      let extension = extArray[extArray.length - 1];
+      const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+      try {
+        //save and resize pic update sub category
+        let categoryData = await Category.findById(req.params._id);
+
+        categoryData.subCategory.push({ name: req.body.name, image: path })
+
+        await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
+
+        await sharp(req.file.buffer).resize(500, 375).toFile(path);
+        // return all categories
+        let allCategories = await Category.find().exec()
+        res.status(200).json(allCategories)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+    }
+
+    //if no picture
+    else {
+
+      try {
+        // update subcategory
+        let categoryData = await Category.findById(req.params._id);
+
+        categoryData.subCategory.push({ name: req.body.name, image: "" })
+
+        await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
+        // return all categories
+        let allCategories = await Category.find().exec()
+        res.status(200).json(allCategories)
+      } catch (error) {
+        res.status(500).json({ message: error });
+      }
+    }
+
+
+  }
+
+]
