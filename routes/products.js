@@ -78,5 +78,9 @@ router.delete("/delete_brand/:_id", product_controller.delete_brand);
 
 router.post("/new_subcategory/:_id", product_controller.new_subcategory);
 
+// delete subcategory
+
+router.delete("/delete_subcategory/", product_controller.delete_subcategory);
+
 
 

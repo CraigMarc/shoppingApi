@@ -6,7 +6,7 @@ const CategorySchema = new Schema({
   
   name: { type: String, required: true, maxLength: 100, minLength: 3 },
   image: { type: String },
-  subCategory: []
+  subCategory: { type: [] },
 })
 
 

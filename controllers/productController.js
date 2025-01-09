@@ -770,3 +770,46 @@ exports.new_subcategory = [
   }
 
 ]
+
+// delete subcategory
+
+
+exports.delete_subcategory = asyncHandler(async (req, res) => {
+
+  let categoryData = await Category.findById(req.body._id);
+  let productSubCategory = await Product.find({ subCategory: req.body.subName });
+
+  
+  if (productSubCategory.length > 0) {
+    res.status(200).json({ message: "category in use" })
+  }
+
+  else {
+
+    if (categoryData.subCategory[req.body.iter].image) {
+      // delete pic
+      fs.unlink(categoryData.subCategory[req.body.iter].image, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log("Delete File successful.");
+      });
+
+    }
+
+    try {
+      
+      
+      categoryData.subCategory.splice(req.body.iter, 1)
+      
+      await Category.findByIdAndUpdate(req.body._id, { subCategory: categoryData.subCategory });
+     
+      let allCategories = await Category.find().exec()
+      res.status(200).json(allCategories)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+  }
+
+});
