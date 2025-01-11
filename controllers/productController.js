@@ -258,20 +258,6 @@ exports.new_image = [
     let newArr = { ...productData.colorArray[req.body.array_number], images: newImArr }
     productData.colorArray[req.body.array_number] = newArr
 
-/*
-    const product = new Product({
-
-      title: productData.title,
-      category: productData.category,
-      subCategory: productData.subCategory,
-      brand: productData.brand,
-      description: productData.description,
-      modelNum: productData.modelNum,
-      sale_percent: productData.sale_percent,
-      published: productData.published,
-      colorArray: productData.colorArray,
-      _id: req.body.current_id,
-    });*/
 
     try {
       //save and resize pic
@@ -320,11 +306,8 @@ exports.post_product1 = [
     .escape(),
   body("colorArray")
     .isArray(),
-  body("subCategory")
-    .trim()
-    .isLength({ min: 1 })
-    .escape()
-    .withMessage("description must be specified."),
+ 
+    
 
 
   async function (req, res, next) {
