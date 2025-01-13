@@ -82,5 +82,13 @@ router.post("/new_subcategory/:_id", product_controller.new_subcategory);
 
 router.delete("/delete_subcategory/", product_controller.delete_subcategory);
 
+//add new pic to brand
+
+router.post("/new_brand_image/:_id", product_controller.new_brand_image);
+
+//delete pic from brand
+
+router.delete("/delete_brand_image/:_id", product_controller.delete_brand_image);
+
 
 

@@ -783,3 +783,64 @@ exports.delete_subcategory = asyncHandler(async (req, res) => {
   }
 
 });
+
+
+// add new brand image
+
+exports.new_brand_image = [
+
+  // Handle single file upload with field name "image"
+  //upload.single("image"),
+  imageUploader.single('image'),
+
+  async function (req, res) {
+
+    // path: where to store resized photo
+    let extArray = req.file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+    try {
+      //save and resize pic
+
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+      await Brand.findByIdAndUpdate(req.params._id, {image: path});
+
+      let allBrands = await Brand.find().exec()
+      res.status(200).json(allBrands)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  }
+
+
+]
+
+// delete brand image
+
+exports.delete_brand_image = asyncHandler(async (req, res) => {
+
+
+  let brandData = await Brand.findById(req.params._id);
+  
+      // delete pic
+      fs.unlink(brandData.image, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log("Delete File successful.");
+      });
+    
+
+    try {
+      await Brand.findByIdAndUpdate(req.params._id, {image: ""});
+      let allBrands = await Brand.find().exec()
+      res.status(200).json(allBrands)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  
+});
