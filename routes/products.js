@@ -115,4 +115,6 @@ router.post("/new_subcategory_image/:_id", product_controller.new_subcategory_im
 router.delete("/delete_subcategory_image/:_id", product_controller.delete_subcategory_image);
 
 
+// edit subcategory
 
+router.put("/edit_subcategory/:_id", product_controller.edit_subcategory);

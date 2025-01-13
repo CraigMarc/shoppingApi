@@ -129,7 +129,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
 
     try {
-      await Product.findByIdAndUpdate(req.params.productId, {published: false});
+      await Product.findByIdAndUpdate(req.params.productId, { published: false });
       let allProducts = await Product.find().populate("category").populate("brand").exec()
       res.status(200).json(allProducts)
     } catch (error) {
@@ -141,7 +141,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
 
     try {
-      await Product.findByIdAndUpdate(req.params.productId, {published: true});
+      await Product.findByIdAndUpdate(req.params.productId, { published: true });
       let allProducts = await Product.find().populate("category").populate("brand").exec()
       res.status(200).json(allProducts)
     } catch (error) {
@@ -263,7 +263,7 @@ exports.new_image = [
       //save and resize pic
 
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      await Product.findByIdAndUpdate(req.body.current_id, {colorArray: productData.colorArray});
+      await Product.findByIdAndUpdate(req.body.current_id, { colorArray: productData.colorArray });
 
       let newProducts = await Product.findById(req.body.current_id);
       res.status(200).json(newProducts)
@@ -306,8 +306,8 @@ exports.post_product1 = [
     .escape(),
   body("colorArray")
     .isArray(),
- 
-    
+
+
 
 
   async function (req, res, next) {
@@ -804,7 +804,7 @@ exports.new_brand_image = [
       //save and resize pic
 
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      await Brand.findByIdAndUpdate(req.params._id, {image: path});
+      await Brand.findByIdAndUpdate(req.params._id, { image: path });
 
       let allBrands = await Brand.find().exec()
       res.status(200).json(allBrands)
@@ -823,26 +823,26 @@ exports.delete_brand_image = asyncHandler(async (req, res) => {
 
 
   let brandData = await Brand.findById(req.params._id);
-  
-      // delete pic
-      fs.unlink(brandData.image, (err) => {
-        if (err) {
-          throw err;
-        }
 
-        console.log("Delete File successful.");
-      });
-    
-
-    try {
-      await Brand.findByIdAndUpdate(req.params._id, {image: ""});
-      let allBrands = await Brand.find().exec()
-      res.status(200).json(allBrands)
-    } catch (error) {
-      res.status(500).json({ message: error });
+  // delete pic
+  fs.unlink(brandData.image, (err) => {
+    if (err) {
+      throw err;
     }
 
-  
+    console.log("Delete File successful.");
+  });
+
+
+  try {
+    await Brand.findByIdAndUpdate(req.params._id, { image: "" });
+    let allBrands = await Brand.find().exec()
+    res.status(200).json(allBrands)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+
 });
 
 // edit brand
@@ -850,15 +850,15 @@ exports.delete_brand_image = asyncHandler(async (req, res) => {
 exports.edit_brand = asyncHandler(async (req, res) => {
 
 
-    try {
-      await Brand.findByIdAndUpdate(req.params._id, {name: req.body.name});
-      let allBrands = await Brand.find().exec()
-      res.status(200).json(allBrands)
-    } catch (error) {
-      res.status(500).json({ message: error });
-    }
+  try {
+    await Brand.findByIdAndUpdate(req.params._id, { name: req.body.name });
+    let allBrands = await Brand.find().exec()
+    res.status(200).json(allBrands)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
 
-  
+
 });
 
 // add new category image
@@ -880,7 +880,7 @@ exports.new_category_image = [
       //save and resize pic
 
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      await Category.findByIdAndUpdate(req.params._id, {image: path});
+      await Category.findByIdAndUpdate(req.params._id, { image: path });
 
       let allCategory = await Category.find().exec()
       res.status(200).json(allCategory)
@@ -899,26 +899,26 @@ exports.delete_category_image = asyncHandler(async (req, res) => {
 
 
   let categoryData = await Category.findById(req.params._id);
-  
-      // delete pic
-      fs.unlink(categoryData.image, (err) => {
-        if (err) {
-          throw err;
-        }
 
-        console.log("Delete File successful.");
-      });
-    
-
-    try {
-      await Category.findByIdAndUpdate(req.params._id, {image: ""});
-      let allCategory = await Category.find().exec()
-      res.status(200).json(allCategory)
-    } catch (error) {
-      res.status(500).json({ message: error });
+  // delete pic
+  fs.unlink(categoryData.image, (err) => {
+    if (err) {
+      throw err;
     }
 
-  
+    console.log("Delete File successful.");
+  });
+
+
+  try {
+    await Category.findByIdAndUpdate(req.params._id, { image: "" });
+    let allCategory = await Category.find().exec()
+    res.status(200).json(allCategory)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+
 });
 
 
@@ -928,7 +928,7 @@ exports.edit_category = asyncHandler(async (req, res) => {
 
 
   try {
-    await Category.findByIdAndUpdate(req.params._id, {name: req.body.name});
+    await Category.findByIdAndUpdate(req.params._id, { name: req.body.name });
     let allCategory = await Category.find().exec()
     res.status(200).json(allCategory)
   } catch (error) {
@@ -961,7 +961,7 @@ exports.new_subcategory_image = [
       //save and resize pic
 
       await sharp(req.file.buffer).resize(500, 375).toFile(path);
-      await Category.findByIdAndUpdate(req.params._id, {subCategory: categoryData.subCategory});
+      await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
 
       let allCategory = await Category.find().exec()
       res.status(200).json(allCategory)
@@ -980,26 +980,51 @@ exports.delete_subcategory_image = asyncHandler(async (req, res) => {
 
 
   let categoryData = await Category.findById(req.params._id);
-  
-      // delete pic
-      fs.unlink(categoryData.subCategory[req.body.subIter].image, (err) => {
-        if (err) {
-          throw err;
-        }
 
-        console.log("Delete File successful.");
-      });
-    
-    categoryData.subCategory[req.body.subIter].image = ""
-
-    try {
-      await Category.findByIdAndUpdate(req.params._id, {subCategory: categoryData.subCategory});
-      let allCategory = await Category.find().exec()
-      res.status(200).json(allCategory)
-    } catch (error) {
-      res.status(500).json({ message: error });
+  // delete pic
+  fs.unlink(categoryData.subCategory[req.body.subIter].image, (err) => {
+    if (err) {
+      throw err;
     }
 
-  
+    console.log("Delete File successful.");
+  });
+
+  categoryData.subCategory[req.body.subIter].image = ""
+
+  try {
+    await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
+    let allCategory = await Category.find().exec()
+    res.status(200).json(allCategory)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+
 });
 
+// edit sub category
+
+exports.edit_subcategory = asyncHandler(async (req, res) => {
+
+  let categoryData = await Category.findById(req.params._id);
+  let oldCategory = categoryData.subCategory[req.body.subIter].name
+
+  categoryData.subCategory[req.body.subIter].name = req.body.name
+
+  console.log(oldCategory)
+
+  try {
+    await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
+    // replace all subcategories in products
+    
+    await Product.updateMany({subCategory: oldCategory}, { subCategory: req.body.name });
+
+    let allCategory = await Category.find().exec()
+    res.status(200).json(allCategory)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+
+});
