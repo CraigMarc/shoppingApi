@@ -110,5 +110,9 @@ router.delete("/delete_subcategory/", product_controller.delete_subcategory);
 
 router.post("/new_subcategory_image/:_id", product_controller.new_subcategory_image);
 
+//delete pic from subcategory
+
+router.delete("/delete_subcategory_image/:_id", product_controller.delete_subcategory_image);
+
 
 

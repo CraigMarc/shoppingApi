@@ -973,3 +973,33 @@ exports.new_subcategory_image = [
 
 
 ]
+
+// delete subcategory image
+
+exports.delete_subcategory_image = asyncHandler(async (req, res) => {
+
+
+  let categoryData = await Category.findById(req.params._id);
+  
+      // delete pic
+      fs.unlink(categoryData.subCategory[req.body.subIter].image, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log("Delete File successful.");
+      });
+    
+    categoryData.subCategory[req.body.subIter].image = ""
+
+    try {
+      await Category.findByIdAndUpdate(req.params._id, {subCategory: categoryData.subCategory});
+      let allCategory = await Category.find().exec()
+      res.status(200).json(allCategory)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  
+});
+
