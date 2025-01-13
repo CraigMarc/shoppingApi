@@ -920,3 +920,20 @@ exports.delete_category_image = asyncHandler(async (req, res) => {
 
   
 });
+
+
+// edit category
+
+exports.edit_category = asyncHandler(async (req, res) => {
+
+
+  try {
+    await Category.findByIdAndUpdate(req.params._id, {name: req.body.name});
+    let allCategory = await Category.find().exec()
+    res.status(200).json(allCategory)
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+
+
+});

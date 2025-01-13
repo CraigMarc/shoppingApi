@@ -74,6 +74,10 @@ router.post("/new_category_image/:_id", product_controller.new_category_image);
 
 router.delete("/delete_category_image/:_id", product_controller.delete_category_image);
 
+// edit category
+
+router.put("/edit_category/:_id", product_controller.edit_category);
+
 // new brand
 
 router.post("/new_brand/", product_controller.new_brand);
