@@ -860,3 +860,63 @@ exports.edit_brand = asyncHandler(async (req, res) => {
 
   
 });
+
+// add new category image
+
+exports.new_category_image = [
+
+  // Handle single file upload with field name "image"
+  //upload.single("image"),
+  imageUploader.single('image'),
+
+  async function (req, res) {
+
+    // path: where to store resized photo
+    let extArray = req.file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+    try {
+      //save and resize pic
+
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+      await Category.findByIdAndUpdate(req.params._id, {image: path});
+
+      let allCategory = await Category.find().exec()
+      res.status(200).json(allCategory)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  }
+
+
+]
+
+// delete category image
+
+exports.delete_category_image = asyncHandler(async (req, res) => {
+
+
+  let categoryData = await Category.findById(req.params._id);
+  
+      // delete pic
+      fs.unlink(categoryData.image, (err) => {
+        if (err) {
+          throw err;
+        }
+
+        console.log("Delete File successful.");
+      });
+    
+
+    try {
+      await Category.findByIdAndUpdate(req.params._id, {image: ""});
+      let allCategory = await Category.find().exec()
+      res.status(200).json(allCategory)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  
+});

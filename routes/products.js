@@ -66,6 +66,14 @@ router.post("/new_category/", product_controller.new_category);
 
 router.delete("/delete_category/:_id", product_controller.delete_category);
 
+//add new pic to category
+
+router.post("/new_category_image/:_id", product_controller.new_category_image);
+
+//delete pic from category
+
+router.delete("/delete_category_image/:_id", product_controller.delete_category_image);
+
 // new brand
 
 router.post("/new_brand/", product_controller.new_brand);
@@ -73,14 +81,6 @@ router.post("/new_brand/", product_controller.new_brand);
 // delete brand
 
 router.delete("/delete_brand/:_id", product_controller.delete_brand);
-
-// new sub category
-
-router.post("/new_subcategory/:_id", product_controller.new_subcategory);
-
-// delete subcategory
-
-router.delete("/delete_subcategory/", product_controller.delete_subcategory);
 
 //add new pic to brand
 
@@ -93,4 +93,14 @@ router.delete("/delete_brand_image/:_id", product_controller.delete_brand_image)
 // edit brand
 
 router.put("/edit_brand/:_id", product_controller.edit_brand);
+
+// new sub category
+
+router.post("/new_subcategory/:_id", product_controller.new_subcategory);
+
+// delete subcategory
+
+router.delete("/delete_subcategory/", product_controller.delete_subcategory);
+
+
 
