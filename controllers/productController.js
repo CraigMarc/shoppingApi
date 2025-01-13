@@ -844,3 +844,19 @@ exports.delete_brand_image = asyncHandler(async (req, res) => {
 
   
 });
+
+// edit brand
+
+exports.edit_brand = asyncHandler(async (req, res) => {
+
+
+    try {
+      await Brand.findByIdAndUpdate(req.params._id, {name: req.body.name});
+      let allBrands = await Brand.find().exec()
+      res.status(200).json(allBrands)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  
+});

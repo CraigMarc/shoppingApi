@@ -90,5 +90,7 @@ router.post("/new_brand_image/:_id", product_controller.new_brand_image);
 
 router.delete("/delete_brand_image/:_id", product_controller.delete_brand_image);
 
+// edit brand
 
+router.put("/edit_brand/:_id", product_controller.edit_brand);
 
