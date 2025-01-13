@@ -106,5 +106,9 @@ router.post("/new_subcategory/:_id", product_controller.new_subcategory);
 
 router.delete("/delete_subcategory/", product_controller.delete_subcategory);
 
+//add new pic to subcategory
+
+router.post("/new_subcategory_image/:_id", product_controller.new_subcategory_image);
+
 
 

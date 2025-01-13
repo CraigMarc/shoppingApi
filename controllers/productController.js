@@ -937,3 +937,39 @@ exports.edit_category = asyncHandler(async (req, res) => {
 
 
 });
+
+// add new subcategory image
+
+exports.new_subcategory_image = [
+
+  // Handle single file upload with field name "image"
+  //upload.single("image"),
+  imageUploader.single('image'),
+
+  async function (req, res) {
+
+    let categoryData = await Category.findById(req.params._id);
+
+    // path: where to store resized photo
+    let extArray = req.file.mimetype.split("/");
+    let extension = extArray[extArray.length - 1];
+    const path = `./uploads/image-${Date.now() + '.' + extension}`
+
+    categoryData.subCategory[req.body.subIter].image = path
+
+    try {
+      //save and resize pic
+
+      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+      await Category.findByIdAndUpdate(req.params._id, {subCategory: categoryData.subCategory});
+
+      let allCategory = await Category.find().exec()
+      res.status(200).json(allCategory)
+    } catch (error) {
+      res.status(500).json({ message: error });
+    }
+
+  }
+
+
+]
