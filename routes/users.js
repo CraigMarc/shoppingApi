@@ -6,11 +6,16 @@ const auth_controller = require("../controllers/authController")
 const usps_controller = require("../controllers/uspsController")
 const customer_controller = require("../controllers/customerController")
 const product_controller = require("../controllers/productController")
+const brand_controller = require("../controllers/brandController")
+const category_controller = require("../controllers/categoryController")
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+
+// stripe routes
 
 // receive payment
 //route for old stripe api
@@ -18,6 +23,9 @@ router.post("/payment/", stripe_controller.post_payment);
 
 // route for new stripe api
 router.post("/intent/", stripe_controller.post_intent);
+
+
+//auth routes
 
 // route for new user
 router.post("/signup/", auth_controller.sign_up);
@@ -27,9 +35,15 @@ router.post("/login/", auth_controller.log_in);
 
 module.exports = router;
 
+
+//usps routes
+
 // usps get shippiong price
 
 router.post("/usps/", usps_controller.post_usps);
+
+
+// customer routes
 
 // new order
 
@@ -43,14 +57,6 @@ router.post("/email/", customer_controller.post_email);
 
 router.get("/all/", product_controller.all_products_get);
 
-// get all brands
-
-router.get("/brand/", product_controller.all_brands_get);
-
-// get all categories
-
-router.get("/category/", product_controller.all_categories_get);
-
 // send contact email
 
 router.post("/contact/", customer_controller.post_contact);
@@ -58,6 +64,22 @@ router.post("/contact/", customer_controller.post_contact);
 // check order status
 
 router.post("/order_status/", customer_controller.order_status);
+
+
+// brand routes
+
+// get all brands
+
+router.get("/brand/", brand_controller.all_brands_get);
+
+
+//category routes
+
+// get all categories
+
+router.get("/category/", category_controller.all_categories_get);
+
+
 
 
 
