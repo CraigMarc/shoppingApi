@@ -47,6 +47,10 @@ router.post("/new_product1/", product_controller.post_product1);
 
 router.post("/update_product/", product_controller.update_product);
 
+//delete size from product
+
+router.delete("/delete_size/", product_controller.delete_size);
+
 //delete color array and pics
 
 router.delete("/delete_color/", product_controller.delete_color);

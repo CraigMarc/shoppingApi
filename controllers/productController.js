@@ -440,6 +440,35 @@ exports.delete_color = asyncHandler(async (req, res) => {
 })
 
 
+// delete size from product
+
+exports.delete_size = asyncHandler(async (req, res) => {
+
+
+
+  try {
+
+    // update database
+
+    await Product.findByIdAndUpdate(req.body._id, {colorArray: req.body.colorArray});
+    let newProducts = await Product.findById(req.body._id);
+    res.status(200).json(newProducts)
+
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+
+
+})
+
+
+
+
+
+
+
+
 
 
 
