@@ -183,19 +183,6 @@ exports.edit_product = asyncHandler(async (req, res) => {
 
 exports.image_delete = asyncHandler(async (req, res) => {
 
-  const product = new Product({
-    title: req.body.title,
-    category: req.body.category,
-    subCategory: req.body.subCategory,
-    brand: req.body.brand,
-    description: req.body.description,
-    modelNum: req.body.modelNum,
-    sale_percent: req.body.sale_percent,
-    product_id: req.body.product_id,
-    colorArray: req.body.colorArray,
-    _id: req.body._id,
-
-  });
 
   try {
 
@@ -214,7 +201,7 @@ exports.image_delete = asyncHandler(async (req, res) => {
 
     // update database
 
-    await Product.findByIdAndUpdate(req.body._id, product, {});
+    await Product.findByIdAndUpdate(req.body._id, {colorArray: req.body.colorArray});
     let newProducts = await Product.findById(req.body._id);
     res.status(200).json(newProducts)
 
