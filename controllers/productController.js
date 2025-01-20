@@ -422,25 +422,12 @@ exports.delete_color = asyncHandler(async (req, res) => {
 
   array2.splice(req.body.color_iter, 1)
 
-  const product = new Product({
-    title: req.body.title,
-    category: req.body.category,
-    subCategory: req.body.subCategory,
-    brand: req.body.brand,
-    description: req.body.description,
-    modelNum: req.body.modelNum,
-    sale_percent: req.body.sale_percent,
-    product_id: req.body.product_id,
-    colorArray: array2,
-    _id: req.body._id,
-
-  });
 
   try {
 
     // update database
 
-    await Product.findByIdAndUpdate(req.body._id, product, {});
+    await Product.findByIdAndUpdate(req.body._id, {colorArray: array2});
     let newProducts = await Product.findById(req.body._id);
     res.status(200).json(newProducts)
 
