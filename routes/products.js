@@ -19,6 +19,10 @@ router.put("/publish/:productId", product_controller.publish_product);
 
 module.exports = router;
 
+// new color
+
+router.post("/new_color/", product_controller.new_color);
+
 // edit product
 
 router.put("/edit/", product_controller.edit_product);

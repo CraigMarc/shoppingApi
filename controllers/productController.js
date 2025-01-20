@@ -337,7 +337,7 @@ exports.post_product1 = [
     });
     try {
       await product.save()
-      let newProducts = await Product.findOne({ product_id: req.body.product_id }).exec()
+      let newProducts = await Product.findOne({ product_id: req.body.product_id }).populate("category").populate("brand").exec()
       res.status(200).json(newProducts)
     } catch (error) {
       res.status(500).json({ message: error });
@@ -348,6 +348,29 @@ exports.post_product1 = [
   }
 
 ]
+
+// new color 
+
+// update product
+
+exports.new_color = asyncHandler(async (req, res) => {
+
+  try {
+
+    // update database
+   
+    await Product.findByIdAndUpdate(req.body._id, { colorArray: req.body.colorArray });
+    
+    let newProducts = await Product.findOne({ _id: req.body._id }).populate("category").populate("brand").exec()
+    
+    res.status(200).json(newProducts)
+
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+
+})
 
 // update product
 
