@@ -47,6 +47,10 @@ router.post("/new_product1/", product_controller.post_product1);
 
 router.post("/update_product/", product_controller.update_product);
 
+// send updated main info
+
+router.put("/edit_main/", product_controller.edit_main);
+
 //delete size from product
 
 router.delete("/delete_size/", product_controller.delete_size);

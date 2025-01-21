@@ -338,7 +338,6 @@ exports.post_product1 = [
 
 // new color 
 
-// update product
 
 exports.new_color = asyncHandler(async (req, res) => {
 
@@ -463,6 +462,27 @@ exports.delete_size = asyncHandler(async (req, res) => {
 })
 
 
+// update main 
+
+
+exports.edit_main = asyncHandler(async (req, res) => {
+
+  try {
+
+    // update database
+   
+    await Product.findByIdAndUpdate(req.body._id, { title: req.body.title, category: req.body.category, subCategory: req.body.subCategory, description: req.body.description, modelNum: req.body.modelNum, sale_percent: req.body.sale_percent, brand: req.body.brand });
+    
+    let newProducts = await Product.findOne({ _id: req.body._id }).populate("category").populate("brand").exec()
+    
+    res.status(200).json(newProducts)
+
+  }
+  catch (error) {
+    res.status(500).send(error);
+  }
+
+})
 
 
 
