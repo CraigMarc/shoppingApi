@@ -10,7 +10,7 @@ dotenv.config();
 // sign up route
 
 // sign up route
-
+/*
 exports.sign_up = [
   // Validate and sanitize the name field.
 
@@ -92,7 +92,7 @@ exports.sign_up = [
       }
     }
   }),
-];
+];*/
 
 // log in route
 

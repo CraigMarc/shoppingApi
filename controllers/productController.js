@@ -308,6 +308,7 @@ exports.post_product1 = [
       return;
     }
 
+    console.log(req.body)
 
     const product = new Product({
       title: req.body.title,

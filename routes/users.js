@@ -27,8 +27,8 @@ router.post("/intent/", stripe_controller.post_intent);
 
 //auth routes
 
-// route for new user
-router.post("/signup/", auth_controller.sign_up);
+// route for new user **** unquote to change password
+//router.post("/signup/", auth_controller.sign_up);
 
 // route for login
 router.post("/login/", auth_controller.log_in);

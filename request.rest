@@ -19,14 +19,14 @@ Content-Type: application/json
 
 {"currency": "usd", "amount": 2000}
 
-### new user
+### new user **** unquote route to change password
 
 Post http://localhost:3000/users/signup 
 Content-Type: application/json
 
 {"firstName": "Craig", "lastName":"Mar", "userName":"cmar@yahoo.com", "password": "123456", "confirm": "123456"}
 
-### login get token
+### login get token *** put in proper password
 
 Post http://localhost:3000/users/login 
 Content-Type: application/json
