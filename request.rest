@@ -288,3 +288,7 @@ Content-Type: image/jpeg
 
 < ./me.JPG 
 --MfnBoundry--
+
+### get all published
+
+Get http://localhost:3000/users/published

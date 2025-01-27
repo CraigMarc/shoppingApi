@@ -79,6 +79,10 @@ router.get("/brand/", brand_controller.all_brands_get);
 
 router.get("/category/", category_controller.all_categories_get);
 
+// get all published
+
+router.get("/published/", product_controller.products_published);
+
 
 
 
