@@ -45,7 +45,7 @@ exports.new_brand = [
       try {
         //save and resize pic
 
-        await sharp(req.file.buffer).resize(500, 375).toFile(path);
+        await sharp(req.file.buffer).resize(350, 700).toFile(path);
         await brand.save()
         let allBrands = await Brand.find().exec()
         res.status(200).json(allBrands)
@@ -140,7 +140,7 @@ exports.new_brand_image = [
     try {
       //save and resize pic
 
-      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+      await sharp(req.file.buffer).resize(350, 700).toFile(path);
       await Brand.findByIdAndUpdate(req.params._id, { image: path });
 
       let allBrands = await Brand.find().exec()

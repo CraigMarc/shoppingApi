@@ -265,7 +265,7 @@ exports.new_image = [
     try {
       //save and resize pic
 
-      await sharp(req.file.buffer).resize(500, 375).toFile(path);
+      await sharp(req.file.buffer).resize(350, 700).toFile(path);
       await Product.findByIdAndUpdate(req.body.current_id, { colorArray: productData.colorArray });
 
       let newProducts = await Product.findById(req.body.current_id);
