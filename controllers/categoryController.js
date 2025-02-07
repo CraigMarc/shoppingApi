@@ -4,7 +4,6 @@ const { body, validationResult } = require("express-validator")
 const mongoose = require("mongoose");
 const Product = require("../models/inventory");
 const Category = require("../models/category");
-const Brand = require("../models/brand");
 const fs = require('fs');
 const sharp = require('sharp');
 

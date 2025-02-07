@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const product_controller = require("../controllers/productController")
 const customer_controller = require("../controllers/customerController")
-const brand_controller = require("../controllers/brandController")
 const category_controller = require("../controllers/categoryController")
 const subCategory_controller = require("../controllers/subCategoryController")
 
@@ -101,30 +100,6 @@ router.delete("/delete_category_image/:_id", category_controller.delete_category
 // edit category
 
 router.put("/edit_category/:_id", category_controller.edit_category);
-
-
-
-// brand routes
-
-// new brand
-
-router.post("/new_brand/", brand_controller.new_brand);
-
-// delete brand
-
-router.delete("/delete_brand/:_id", brand_controller.delete_brand);
-
-//add new pic to brand
-
-router.post("/new_brand_image/:_id", brand_controller.new_brand_image);
-
-//delete pic from brand
-
-router.delete("/delete_brand_image/:_id", brand_controller.delete_brand_image);
-
-// edit brand
-
-router.put("/edit_brand/:_id", brand_controller.edit_brand);
 
 
 

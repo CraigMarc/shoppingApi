@@ -6,7 +6,6 @@ const auth_controller = require("../controllers/authController")
 const usps_controller = require("../controllers/uspsController")
 const customer_controller = require("../controllers/customerController")
 const product_controller = require("../controllers/productController")
-const brand_controller = require("../controllers/brandController")
 const category_controller = require("../controllers/categoryController")
 
 
@@ -65,12 +64,6 @@ router.post("/contact/", customer_controller.post_contact);
 
 router.post("/order_status/", customer_controller.order_status);
 
-
-// brand routes
-
-// get all brands
-
-router.get("/brand/", brand_controller.all_brands_get);
 
 
 //category routes

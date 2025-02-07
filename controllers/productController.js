@@ -4,7 +4,6 @@ const { body, validationResult } = require("express-validator")
 const mongoose = require("mongoose");
 const Product = require("../models/inventory");
 const Category = require("../models/category");
-const Brand = require("../models/brand");
 const fs = require('fs');
 const sharp = require('sharp');
 
@@ -68,7 +67,7 @@ exports.all_products_get = asyncHandler(async (req, res) => {
 
 
   try {
-    let allProducts = await Product.find().populate("category").populate("brand").exec()
+    let allProducts = await Product.find().populate("category").exec()
     res.status(200).json(allProducts)
   } catch (error) {
     res.status(500).json({ message: error });
@@ -82,7 +81,7 @@ exports.products_published = asyncHandler(async (req, res) => {
 
 
   try {
-    let allProducts = await Product.find({published: true}).populate("category").populate("brand").exec()
+    let allProducts = await Product.find({published: true}).populate("category").exec()
     res.status(200).json(allProducts)
   } catch (error) {
     res.status(500).json({ message: error });
@@ -123,7 +122,7 @@ exports.delete_product = asyncHandler(async (req, res) => {
     //delete product 
 
     await Product.findByIdAndDelete(req.params.productId);
-    let allProducts = await Product.find().populate("category").populate("brand").exec()
+    let allProducts = await Product.find().populate("category").exec()
     res.status(200).json(allProducts)
 
   } catch (error) {
@@ -146,7 +145,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
     try {
       await Product.findByIdAndUpdate(req.params.productId, { published: false });
-      let allProducts = await Product.find().populate("category").populate("brand").exec()
+      let allProducts = await Product.find().populate("category").exec()
       res.status(200).json(allProducts)
     } catch (error) {
       res.status(500).json({ message: error });
@@ -158,7 +157,7 @@ exports.publish_product = asyncHandler(async (req, res) => {
 
     try {
       await Product.findByIdAndUpdate(req.params.productId, { published: true });
-      let allProducts = await Product.find().populate("category").populate("brand").exec()
+      let allProducts = await Product.find().populate("category").exec()
       res.status(200).json(allProducts)
     } catch (error) {
       res.status(500).json({ message: error });
@@ -363,7 +362,7 @@ exports.new_color = asyncHandler(async (req, res) => {
    
     await Product.findByIdAndUpdate(req.body._id, { colorArray: req.body.colorArray });
     
-    let newProducts = await Product.findOne({ _id: req.body._id }).populate("category").populate("brand").exec()
+    let newProducts = await Product.findOne({ _id: req.body._id }).populate("category").exec()
     
     res.status(200).json(newProducts)
 
@@ -489,7 +488,7 @@ exports.edit_main = asyncHandler(async (req, res) => {
    
     await Product.findByIdAndUpdate(req.body._id, { title: req.body.title, category: req.body.category, subCategory: req.body.subCategory, description: req.body.description, modelNum: req.body.modelNum, sale_percent: req.body.sale_percent, brand: req.body.brand });
     
-    let newProducts = await Product.findOne({ _id: req.body._id }).populate("category").populate("brand").exec()
+    let newProducts = await Product.findOne({ _id: req.body._id }).populate("category").exec()
     
     res.status(200).json(newProducts)
 
