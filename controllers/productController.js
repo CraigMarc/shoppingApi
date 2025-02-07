@@ -324,7 +324,6 @@ exports.post_product1 = [
       return;
     }
 
-    console.log(req.body)
 
     const product = new Product({
       title: req.body.title,
@@ -341,7 +340,7 @@ exports.post_product1 = [
     });
     try {
       await product.save()
-      let newProducts = await Product.findOne({ product_id: req.body.product_id }).populate("category").populate("brand").exec()
+      let newProducts = await Product.findOne({ product_id: req.body.product_id }).populate("category").exec()
       res.status(200).json(newProducts)
     } catch (error) {
       res.status(500).json({ message: error });
