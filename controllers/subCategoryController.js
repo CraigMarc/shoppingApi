@@ -42,7 +42,7 @@ exports.new_subcategory = [
 
         await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
 
-        await sharp(req.file.buffer).resize(350, 700).toFile(path);
+        await sharp(req.file.buffer).resize(700, 700).toFile(path);
         // return all categories
         let allCategories = await Category.find().exec()
         res.status(200).json(allCategories)
@@ -142,7 +142,7 @@ exports.new_subcategory_image = [
       try {
         //save and resize pic
   
-        await sharp(req.file.buffer).resize(350, 700).toFile(path);
+        await sharp(req.file.buffer).resize(700, 700).toFile(path);
         await Category.findByIdAndUpdate(req.params._id, { subCategory: categoryData.subCategory });
   
         let allCategory = await Category.find().exec()
