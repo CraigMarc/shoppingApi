@@ -10,6 +10,7 @@ const cors = require('cors');
 const passport = require("passport");
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const JwtStrategy = require("passport-jwt").Strategy;
+const compression = require("compression");
 
 const productRouter = require('./routes/products')
 const indexRouter = require('./routes/index');
@@ -29,6 +30,8 @@ app.use(
 
 
 app.use(cors());
+
+app.use(compression()); // Compress all routes
 
 //added auth route
 
