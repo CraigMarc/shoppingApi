@@ -20,16 +20,16 @@ const User = require("./models/user");
 
 const app = express();
 
-/* restrict access later ***********
+
 app.use(
   cors({
-    origin: ["https://blog-public-two.vercel.app", "https://blog-user-beta.vercel.app"],
+    origin: ["https://shopping-cart-topaz-sigma.vercel.app", "http://localhost:5173"],
     credentials: true,
   })
-);*/
+);
 
 
-app.use(cors());
+//app.use(cors());
 
 app.use(compression()); // Compress all routes
 
