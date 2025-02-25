@@ -299,7 +299,7 @@ exports.post_contact = asyncHandler(async (req, res) => {
       from: 'This Store <cmar1455cr@gmail.com>',
       to: 'cmarcinkiewicz2000@yahoo.com',
       subject: req.body.subject,
-      text: req.body.message
+      text: req.body.email + " \n " + req.body.message
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

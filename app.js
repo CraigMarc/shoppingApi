@@ -23,7 +23,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://shopping-cart-topaz-sigma.vercel.app"],
+    origin: ["https://shopping-cart-topaz-sigma.vercel.app", "http://localhost:5173"],
     credentials: true,
   })
 );
